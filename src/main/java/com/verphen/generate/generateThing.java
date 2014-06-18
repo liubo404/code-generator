@@ -14,229 +14,250 @@ import main.java.com.verphen.utils.MStringUtil;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.app.VelocityEngine;
-mport main.java.com.verphen.utils.MStringUtil;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 
 public class generateThing {
-	
+
 	public static final String defaultPackage = "yunlu";
 	public static final String defaultDomainsuffix = "com";
-	
-	public static void generateAll(String dataBaseName,String outpath) throws Exception{
+
+	public static void generateAll(String dataBaseName, String outpath)
+			throws Exception {
 		List<String> tableName = db.getTable(dataBaseName);
 		List<Table> list = db.getColumn(tableName);
 		URL url = Thread.currentThread().getClass().getResource("/template");
-		if(url==null){
+		if (url == null) {
 			System.out.println("url is null");
-		}else{
+		} else {
 			String filepath = url.getPath();
-//			System.out.println(filepath);
-			if(filepath.startsWith("file:")){   
-               if(filepath.length()>5){   
-            	   filepath = filepath.substring(5);   
-               }   
-               filepath = filepath.split("!")[0];   
-               File file = new File(filepath);   
-//               System.out.println(file.getParent());   
-               filepath = file.getParent() + "\\template";
-              
-			}else{
-				System.out.println("is not jar file");
-			}
-			writeFile(filepath,outpath,list);
-			
-		}
-		
-	}
-	public static void generateOneModle(String tableName,String outpath) throws Exception{
-		URL url = Thread.currentThread().getClass().getResource("/template");
-		if(url==null){
-			System.out.println("url is null");
-		}else{
-			String filepath = url.getPath();
-//			System.out.println(filepath);
-			if(filepath.startsWith("file:")){   
-               if(filepath.length()>5){   
-            	   filepath = filepath.substring(5);   
-               }   
-               filepath = filepath.split("!")[0];   
-               File file = new File(filepath);   
-//               System.out.println(file.getParent());   
-               filepath = file.getParent() + "\\template";
-              
-			}else{
-				System.out.println("is not jar file");
-			}
-			writeOneModelFile(filepath,outpath,tableName);
-			
-		}
-		
-	}
-	
-
-	
-	
-	
-	private static void writeFile(String templatepath , String filepath , List<Table> list){
-		
-		//1.∂¡»°ƒ£∞Â–≈œ¢£¨“‘º∞¥¥Ω®Œƒº˛º–
-		try {
-			String dirName = filepath+"//"+defaultDomainsuffix + "//"+ Table.domain + "//";
-			CreateFileUtil.createDir(dirName);
-			Map<Integer, String> map = CreateFileUtil.readfile(templatepath, null);
-			for(int i=0 ; i < map.size(); i++) {
-				String template = map.get(i);
-				System.out.println(template);
-				String name = template.substring(map.get(i).lastIndexOf("\\")+1);
-				String templateName = name.substring(0,name.indexOf("."));
-				//¥¥Ω®Œƒº˛º–
-				
-				
-				for(Table tb : list){
-					String this_folder = dirName;
-//					if(StringUtils.isNotEmpty(tb.getPackageName())){//‘⁄defaultDomainsuffix//defaultPackage//œ¬√ÊÃÌº” ˝æ›ø‚Ã·»°µƒ“ª≤„_..
-//						this_folder = this_folder +tb.getPackageName();
-//					}
-					if(StringUtils.isNotEmpty(templateName)&& templateName.equalsIgnoreCase("queryImpl")){
-						this_folder =this_folder +"query"   ;
-					}
-					if(StringUtils.isNotEmpty(templateName)&& templateName.equalsIgnoreCase("queryCondition")){
-						this_folder =this_folder +"query"   ;
-					}
-					if(StringUtils.isNotEmpty(templateName)&& templateName.equalsIgnoreCase("managerImpl")){
-						this_folder =this_folder +"manager"   ;
-					}
-					//º”‘ÿƒ£∞Â
-					String result = loadTemplate(templatepath,tb,templateName+".java.vm");
-					// ¥¥Ω®Œƒº˛
-					String fileName = null;
-					
-					this_folder = this_folder + "/"+ templateName;
-					if(templateName.equals("model")){
-						fileName = this_folder  +"/"+ tb.getModelName() + ".java";
-					}
-					else if(templateName.equals("queryImpl")){
-						fileName = this_folder  +"/"+ tb.getModelName() + ".java";
-					}
-					else{
-						String uptemplateName =  MStringUtil.upperCase(templateName, 0);
-						fileName = this_folder +"/"+ tb.getModelName() + uptemplateName + ".java";
-					}
-				    CreateFileUtil.CreateFile(fileName);
-				    CreateFileUtil.write(fileName,result);
+			// System.out.println(filepath);
+			if (filepath.startsWith("file:")) {
+				if (filepath.length() > 5) {
+					filepath = filepath.substring(5);
 				}
-				
+				filepath = filepath.split("!")[0];
+				File file = new File(filepath);
+				// System.out.println(file.getParent());
+				filepath = file.getParent() + "\\template";
+
+			} else {
+				System.out.println("is not jar file");
 			}
-		}catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.println("Write file error!");
+			writeFile(filepath, outpath, list);
+
 		}
+
 	}
-	
-private static void writeOneModelFile(String templatepath , String filepath , String tableName){
-		
-		//1.∂¡»°ƒ£∞Â–≈œ¢£¨“‘º∞¥¥Ω®Œƒº˛º–
+
+	public static void generateOneModle(String tableName, String outpath)
+			throws Exception {
+		URL url = Thread.currentThread().getClass().getResource("/template");
+		if (url == null) {
+			System.out.println("url is null");
+		} else {
+			String filepath = url.getPath();
+			// System.out.println(filepath);
+			if (filepath.startsWith("file:")) {
+				if (filepath.length() > 5) {
+					filepath = filepath.substring(5);
+				}
+				filepath = filepath.split("!")[0];
+				File file = new File(filepath);
+				// System.out.println(file.getParent());
+				filepath = file.getParent() + "\\template";
+
+			} else {
+				System.out.println("is not jar file");
+			}
+			writeOneModelFile(filepath, outpath, tableName);
+
+		}
+
+	}
+
+	private static void writeFile(String templatepath, String filepath,
+			List<Table> list) {
+
+		// 1.ËØªÂèñÊ®°Êùø‰ø°ÊÅØÔºå‰ª•ÂèäÂàõÂª∫Êñá‰ª∂Â§π
 		try {
-			String dirName = filepath+"//"+defaultDomainsuffix + "//"+ Table.domain + "//";
+			String dirName = filepath + "//" + defaultDomainsuffix + "//"
+					+ Table.domain + "//";
 			CreateFileUtil.createDir(dirName);
-			Map<Integer, String> map = CreateFileUtil.readfile(templatepath, null);
-			for(int i=0 ; i < map.size(); i++) {
+			Map<Integer, String> map = CreateFileUtil.readfile(templatepath,
+					null);
+			for (int i = 0; i < map.size(); i++) {
 				String template = map.get(i);
 				System.out.println(template);
-				String name = template.substring(map.get(i).lastIndexOf("\\")+1);
-				String templateName = name.substring(0,name.indexOf("."));
-				//¥¥Ω®Œƒº˛º–
-				
-				    Table table = db.getColumnByOneTable(tableName);
-				
+				String name = template
+						.substring(map.get(i).lastIndexOf("\\") + 1);
+				String templateName = name.substring(0, name.indexOf("."));
+				// ÂàõÂª∫Êñá‰ª∂Â§π
+
+				for (Table tb : list) {
 					String this_folder = dirName;
-//					if(StringUtils.isNotEmpty(table.getPackageName())){
-//						this_folder = this_folder +table.getPackageName();
-//					}
-					if(StringUtils.isNotEmpty(templateName)&& templateName.equalsIgnoreCase("queryImpl")){
-						this_folder =this_folder +"query"   ;
+					// if(StringUtils.isNotEmpty(tb.getPackageName())){//Âú®defaultDomainsuffix//defaultPackage//‰∏ãÈù¢Ê∑ªÂä†Êï∞ÊçÆÂ∫ìÊèêÂèñÁöÑ‰∏ÄÂ±Ç_..
+					// this_folder = this_folder +tb.getPackageName();
+					// }
+					if (StringUtils.isNotEmpty(templateName)
+							&& templateName.equalsIgnoreCase("queryImpl")) {
+						this_folder = this_folder + "query";
 					}
-					if(StringUtils.isNotEmpty(templateName)&& templateName.equalsIgnoreCase("queryCondition")){
-						this_folder =this_folder +"query"   ;
+					if (StringUtils.isNotEmpty(templateName)
+							&& templateName.equalsIgnoreCase("queryCondition")) {
+						this_folder = this_folder + "query";
 					}
-					if(StringUtils.isNotEmpty(templateName)&& templateName.equalsIgnoreCase("managerImpl")){
-						this_folder =this_folder +"manager"   ;
+					if (StringUtils.isNotEmpty(templateName)
+							&& templateName.equalsIgnoreCase("managerImpl")) {
+						this_folder = this_folder + "manager";
 					}
-					if(StringUtils.isNotEmpty(templateName)&& templateName.equalsIgnoreCase("daoImpl")){
-						this_folder =this_folder +"dao"   ;
-					}
-					//º”‘ÿƒ£∞Â
-					String result = loadTemplate(templatepath,table,templateName+".java.vm");
-					// ¥¥Ω®Œƒº˛
+					// Âä†ËΩΩÊ®°Êùø
+					String result = loadTemplate(templatepath, tb, templateName
+							+ ".java.vm");
+					// ÂàõÂª∫Êñá‰ª∂
 					String fileName = null;
-					if(StringUtils.isNotEmpty(templateName)&& templateName.equalsIgnoreCase("queryImpl")){
-						this_folder =this_folder +"/impl"   ;
-					}else
-					if(StringUtils.isNotEmpty(templateName)&& templateName.equalsIgnoreCase("queryCondition")){
-						this_folder =this_folder +"/condition"   ;
-					}else
-					if(StringUtils.isNotEmpty(templateName)&& templateName.equalsIgnoreCase("managerImpl")){
-						this_folder =this_folder +"/impl"   ;
-					}else
-					if(StringUtils.isNotEmpty(templateName)&& templateName.equalsIgnoreCase("daoImpl")){
-						this_folder =this_folder +"/impl"   ;
-					}else{
-					    this_folder = this_folder + "/"+ templateName;
+
+					this_folder = this_folder + "/" + templateName;
+					if (templateName.equals("model")) {
+						fileName = this_folder + "/" + tb.getModelName()
+								+ ".java";
+					} else if (templateName.equals("queryImpl")) {
+						fileName = this_folder + "/" + tb.getModelName()
+								+ ".java";
+					} else {
+						String uptemplateName = MStringUtil.upperCase(
+								templateName, 0);
+						fileName = this_folder + "/" + tb.getModelName()
+								+ uptemplateName + ".java";
 					}
-					if(templateName.equals("model")){
-						fileName = this_folder  +"/"+ table.getModelName() + ".java";
-					}
-//					else if(templateName.equals("queryImpl")){
-//						System.out.println("this......................"+this_folder);
-//						fileName = this_folder  +"/"+ table.getModelName() + ".java";
-//					}
-					
-					else{
-						String uptemplateName =  MStringUtil.upperCase(templateName, 0);
-						fileName = this_folder +"/"+ table.getModelName() + uptemplateName + ".java";
-					}
-				    CreateFileUtil.CreateFile(fileName);
-				    CreateFileUtil.write(fileName,result);
-				
-				
+					CreateFileUtil.CreateFile(fileName);
+					CreateFileUtil.write(fileName, result);
+				}
+
 			}
-		}catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println("Write file error!");
 		}
 	}
-	
-	public static String loadTemplate(String templatePath , Table table , String templateName){
+
+	private static void writeOneModelFile(String templatepath, String filepath,
+			String tableName) {
+
+		// 1.ËØªÂèñÊ®°Êùø‰ø°ÊÅØÔºå‰ª•ÂèäÂàõÂª∫Êñá‰ª∂Â§π
+		try {
+			String dirName = filepath + "//" + defaultDomainsuffix + "//"
+					+ Table.domain + "//";
+			CreateFileUtil.createDir(dirName);
+			Map<Integer, String> map = CreateFileUtil.readfile(templatepath,
+					null);
+			for (int i = 0; i < map.size(); i++) {
+				String template = map.get(i);
+				System.out.println(template);
+				String name = template
+						.substring(map.get(i).lastIndexOf("\\") + 1);
+				String templateName = name.substring(0, name.indexOf("."));
+				// ÂàõÂª∫Êñá‰ª∂Â§π
+
+				Table table = db.getColumnByOneTable(tableName);
+
+				String this_folder = dirName;
+				// if(StringUtils.isNotEmpty(table.getPackageName())){
+				// this_folder = this_folder +table.getPackageName();
+				// }
+				if (StringUtils.isNotEmpty(templateName)
+						&& templateName.equalsIgnoreCase("queryImpl")) {
+					this_folder = this_folder + "query";
+				}
+				if (StringUtils.isNotEmpty(templateName)
+						&& templateName.equalsIgnoreCase("queryCondition")) {
+					this_folder = this_folder + "query";
+				}
+				if (StringUtils.isNotEmpty(templateName)
+						&& templateName.equalsIgnoreCase("managerImpl")) {
+					this_folder = this_folder + "manager";
+				}
+				if (StringUtils.isNotEmpty(templateName)
+						&& templateName.equalsIgnoreCase("daoImpl")) {
+					this_folder = this_folder + "dao";
+				}
+				// Âä†ËΩΩÊ®°Êùø
+				String result = loadTemplate(templatepath, table, templateName
+						+ ".java.vm");
+				// ÂàõÂª∫Êñá‰ª∂
+				String fileName = null;
+				if (StringUtils.isNotEmpty(templateName)
+						&& templateName.equalsIgnoreCase("queryImpl")) {
+					this_folder = this_folder + "/impl";
+				} else if (StringUtils.isNotEmpty(templateName)
+						&& templateName.equalsIgnoreCase("queryCondition")) {
+					this_folder = this_folder + "/condition";
+				} else if (StringUtils.isNotEmpty(templateName)
+						&& templateName.equalsIgnoreCase("managerImpl")) {
+					this_folder = this_folder + "/impl";
+				} else if (StringUtils.isNotEmpty(templateName)
+						&& templateName.equalsIgnoreCase("daoImpl")) {
+					this_folder = this_folder + "/impl";
+				} else {
+					this_folder = this_folder + "/" + templateName;
+				}
+				if (templateName.equals("model")) {
+					fileName = this_folder + "/" + table.getModelName()
+							+ ".java";
+				}
+				// else if(templateName.equals("queryImpl")){
+				// System.out.println("this......................"+this_folder);
+				// fileName = this_folder +"/"+ table.getModelName() + ".java";
+				// }
+
+				else {
+					String uptemplateName = MStringUtil.upperCase(templateName,
+							0);
+					fileName = this_folder + "/" + table.getModelName()
+							+ uptemplateName + ".java";
+				}
+				CreateFileUtil.CreateFile(fileName);
+				CreateFileUtil.write(fileName, result);
+
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("Write file error!");
+		}
+	}
+
+	public static String loadTemplate(String templatePath, Table table,
+			String templateName) {
 		String result = "";
-		try{
-			
-			String fileDir = java.net.URLDecoder.decode(templatePath,"utf-8");
+		try {
+
+			String fileDir = java.net.URLDecoder.decode(templatePath, "utf-8");
 			System.out.println(fileDir);
 			VelocityEngine ve = new VelocityEngine();
 			Properties properties = new Properties();
 			properties.setProperty(ve.FILE_RESOURCE_LOADER_PATH, fileDir);
-			ve.init(properties);   //≥ı ºªØ
+			ve.init(properties); // ÂàùÂßãÂåñ
 
-			// 3.∞— ˝æ›ÃÓ»Î…œœ¬Œƒ
+			// 3.ÊääÊï∞ÊçÆÂ°´ÂÖ•‰∏ä‰∏ãÊñá
 			Map<String, Object> cont = new HashMap<String, Object>();
 			cont.put("modelName", table.getModelName());
 			cont.put("tableName", table.getTableName());
 			cont.put("PropertyList", table.getPropertyList());
 			cont.put("model", table.getModelName().toLowerCase());
 			String packageName = table.getPackageName();
-			if(StringUtils.isNotEmpty(packageName)){
-				cont.put("packageName",  "." + table.getPackageName());
-				cont.put("namespace", table.domain + "/" + table.getPackageName());
-			}else{
+			if (StringUtils.isNotEmpty(packageName)) {
+				cont.put("packageName", "." + table.getPackageName());
+				cont.put("namespace",
+						table.domain + "/" + table.getPackageName());
+			} else {
 				cont.put("packageName", table.getPackageName());
-				cont.put("namespace", table.domain );
+				cont.put("namespace", table.domain);
 			}
 			cont.put("domain", table.domain);
-			result = VelocityEngineUtils.mergeTemplateIntoString(ve, templateName, "utf-8", cont);
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
+			result = VelocityEngineUtils.mergeTemplateIntoString(ve,
+					templateName, "utf-8", cont);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
-	
-
 }
