@@ -12,9 +12,9 @@ import main.java.com.verphen.model.Table;
 import main.java.com.verphen.utils.CreateFileUtil;
 import main.java.com.verphen.utils.MStringUtil;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.app.VelocityEngine;
-import org.springframework.ui.velocity.VelocityEngineUtils;
+mport main.java.com.verphen.utils.MStringUtil;
 
 public class generateThing {
 	

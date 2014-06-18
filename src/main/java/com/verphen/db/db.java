@@ -11,8 +11,6 @@ import main.java.com.verphen.model.Column;
 import main.java.com.verphen.model.Table;
 import main.java.com.verphen.utils.TypeConvertUtil;
 
-import org.apache.commons.lang.StringUtils;
-
 public class db {
 
 	public static Connection con = null;
@@ -20,11 +18,11 @@ public class db {
 
 	public static void init() {
 		getCon("mysql", "192.168.0.120", 3306, "root", "Yunluqwe");
-//		getBruceConn();
+		// getBruceConn();
 	}
-	
+
 	public static void initBruce() {
-//		getCon("mysql", "192.168.0.120", 3306, "root", "Yunluqwe");
+		// getCon("mysql", "192.168.0.120", 3306, "root", "Yunluqwe");
 		getBruceConn();
 	}
 
@@ -141,7 +139,7 @@ public class db {
 		try {
 			String sql = "show columns from " + tableName;
 			ResultSet rs = stat.executeQuery(sql);
-            int length=0;
+			int length = 0;
 			tb = getTableByTableName(tableName);
 
 			List<Column> list = new ArrayList<Column>();
@@ -153,16 +151,16 @@ public class db {
 				String pk = rs.getString("key");
 				length = getLength(length, column_type);
 
-					column_field = new String(
-							column_field.getBytes("ISO-8859-1"), "GB2312");
-					column_type = new String(
-							column_type.getBytes("ISO-8859-1"), "GB2312");
-					Column p = new Column();
-					p.setType(TypeConvertUtil.getType(column_type));
-					p.setName(column_field);
-					p.setColumn(getCloumnName(column_field));
-					p.setLength(length);
-					list.add(p);
+				column_field = new String(column_field.getBytes("ISO-8859-1"),
+						"GB2312");
+				column_type = new String(column_type.getBytes("ISO-8859-1"),
+						"GB2312");
+				Column p = new Column();
+				p.setType(TypeConvertUtil.getType(column_type));
+				p.setName(column_field);
+				p.setColumn(getCloumnName(column_field));
+				p.setLength(length);
+				list.add(p);
 			}
 			tb.setPropertyList(list);
 			// rs.close();
@@ -186,7 +184,7 @@ public class db {
 				if (tableName != null && !tableName.equals("")) {
 					String sql = "show columns from " + tableName;
 					ResultSet rs = stat.executeQuery(sql);
-					 int length=0;
+					int length = 0;
 					Table tb = getTableByTableName(tableName);
 
 					List<Column> list = new ArrayList<Column>();
@@ -197,18 +195,16 @@ public class db {
 						column_type = rs.getString("type");
 						String pk = rs.getString("key");
 						length = getLength(length, column_type);
-							column_field = new String(
-									column_field.getBytes("ISO-8859-1"),
-									"GB2312");
-							column_type = new String(
-									column_type.getBytes("ISO-8859-1"),
-									"GB2312");
-							Column p = new Column();
-							p.setType(TypeConvertUtil.getType(column_type));
-							p.setName(column_field);
-							p.setColumn(getCloumnName(column_field));
-							p.setLength(length);
-							list.add(p);
+						column_field = new String(
+								column_field.getBytes("ISO-8859-1"), "GB2312");
+						column_type = new String(
+								column_type.getBytes("ISO-8859-1"), "GB2312");
+						Column p = new Column();
+						p.setType(TypeConvertUtil.getType(column_type));
+						p.setName(column_field);
+						p.setColumn(getCloumnName(column_field));
+						p.setLength(length);
+						list.add(p);
 					}
 					tb.setPropertyList(list);
 					listTb.add(tb);
@@ -225,8 +221,7 @@ public class db {
 	private static int getLength(int length, String column_type) {
 		if (column_type.contains("(")) {
 			length = Integer.parseInt(column_type.substring(
-					column_type.indexOf("(")+1,
-					column_type.indexOf(")")));
+					column_type.indexOf("(") + 1, column_type.indexOf(")")));
 		}
 		return length;
 	}
@@ -256,18 +251,18 @@ public class db {
 		return sb.toString();
 	}
 
-//	public static String getCloumnName(String name) {
-//		String[] m = name.split("_");
-//		StringBuffer sb = new StringBuffer();
-//		sb.append(m[0].toLowerCase());
-//		for (int i = 1; i < m.length; i++) {
-//			String index = m[i].substring(0, 1).toUpperCase();
-//			String el = m[i].substring(1).toLowerCase();
-//			sb.append(index + el);
-//		}
-//		return sb.toString();
-//	}
-	
+	// public static String getCloumnName(String name) {
+	// String[] m = name.split("_");
+	// StringBuffer sb = new StringBuffer();
+	// sb.append(m[0].toLowerCase());
+	// for (int i = 1; i < m.length; i++) {
+	// String index = m[i].substring(0, 1).toUpperCase();
+	// String el = m[i].substring(1).toLowerCase();
+	// sb.append(index + el);
+	// }
+	// return sb.toString();
+	// }
+
 	public static String getCloumnName(String name) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(name);

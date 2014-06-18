@@ -1,1 +1,17 @@
+# ===== Eclipse ====== #
+*.classpath
+*.project
+/.settings
+
+
+# ===== Package ===== #
+/target
+/src/test
+
+
+# ===== project ===== #
+*.class
+*.jar
+*.war
+*.ear
 /target
