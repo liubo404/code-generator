@@ -1,4 +1,4 @@
-package util;
+package main.java.com.verphen.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,33 +16,33 @@ public static boolean CreateFile(String destFileName) {
     File file = new File(destFileName);
     if (file.exists()) {
     	file.delete();
-//    	System.out.println("创建单个文件" + destFileName + "失败，目标文件已存在！");
+//    	System.out.println("锟斤拷锟斤拷锟斤拷锟斤拷锟侥硷拷" + destFileName + "失锟杰ｏ拷目锟斤拷锟侥硷拷锟窖达拷锟节ｏ拷");
     	return false;
     }
     if (destFileName.endsWith(File.separator)) {
-    	System.out.println("创建单个文件" + destFileName + "失败，目标不能是目录！");
+    	System.out.println("锟斤拷锟斤拷锟斤拷锟斤拷锟侥硷拷" + destFileName + "失锟杰ｏ拷目锟疥不锟斤拷锟斤拷目录锟斤拷");
     	return false;
     }
     if (!file.getParentFile().exists()) {
-    	 System.out.println("目标文件所在路径不存在，准备创建。。。");
+    	 System.out.println("目锟斤拷锟侥硷拷锟斤拷锟斤拷路锟斤拷锟斤拷锟斤拷锟节ｏ拷准锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷");
      if (!file.getParentFile().mkdirs()) {
-    	 System.out.println("创建目录文件所在的目录失败！");
+    	 System.out.println("锟斤拷锟斤拷目录锟侥硷拷锟斤拷锟节碉拷目录失锟杰ｏ拷");
     	 return false;
      }
     }
 
-    // 创建目标文件
+    // 锟斤拷锟斤拷目锟斤拷锟侥硷拷
     try {
      if (file.createNewFile()) {
-    	 System.out.println("创建单个文件" + destFileName + "成功！");
+    	 System.out.println("锟斤拷锟斤拷锟斤拷锟斤拷锟侥硷拷" + destFileName + "锟缴癸拷锟斤拷");
     	 return true;
      } else {
-    	 System.out.println("创建单个文件" + destFileName + "失败！");
+    	 System.out.println("锟斤拷锟斤拷锟斤拷锟斤拷锟侥硷拷" + destFileName + "失锟杰ｏ拷");
     	 return false;
      }
     } catch (IOException e) {
     	e.printStackTrace();
-    	System.out.println("创建单个文件" + destFileName + "失败！");
+    	System.out.println("锟斤拷锟斤拷锟斤拷锟斤拷锟侥硷拷" + destFileName + "失锟杰ｏ拷");
     	return false;
     }
 }
@@ -52,17 +52,17 @@ public static boolean CreateFile(String destFileName) {
 public static boolean createDir(String destDirName) {
     File dir = new File(destDirName);
     if(dir.exists()) {
-     System.out.println("创建目录" + destDirName + "失败，目标目录已存在！");
+     System.out.println("锟斤拷锟斤拷目录" + destDirName + "失锟杰ｏ拷目锟斤拷目录锟窖达拷锟节ｏ拷");
      return false;
     }
     if(!destDirName.endsWith(File.separator))
      destDirName = destDirName + File.separator;
-    // 创建单个目录
+    // 锟斤拷锟斤拷锟斤拷锟斤拷目录
     if(dir.mkdirs()) {
-     System.out.println("创建目录" + destDirName + "成功！");
+     System.out.println("锟斤拷锟斤拷目录" + destDirName + "锟缴癸拷锟斤拷");
      return true;
     } else {
-     System.out.println("创建目录" + destDirName + "成功！");
+     System.out.println("锟斤拷锟斤拷目录" + destDirName + "锟缴癸拷锟斤拷");
      return false;
     }
 }
@@ -73,16 +73,16 @@ public static String createTempFile(String prefix, String suffix, String dirName
     File tempFile = null;
     try{
     if(dirName == null) {
-     // 在默认文件夹下创建临时文件
+     // 锟斤拷默锟斤拷锟侥硷拷锟斤拷锟铰达拷锟斤拷锟斤拷时锟侥硷拷
      tempFile = File.createTempFile(prefix, suffix);
      return tempFile.getCanonicalPath();
     }
     else {
      File dir = new File(dirName);
-     // 如果临时文件所在目录不存在，首先创建
+     // 锟斤拷锟斤拷锟绞憋拷募锟斤拷锟斤拷锟侥柯硷拷锟斤拷锟斤拷冢锟斤拷锟斤拷却锟斤拷锟?
      if(!dir.exists()) {
       if(!CreateFileUtil.createDir(dirName)){
-       System.out.println("创建临时文件失败，不能创建临时文件所在目录！");
+       System.out.println("锟斤拷锟斤拷锟斤拷时锟侥硷拷失锟杰ｏ拷锟斤拷锟杰达拷锟斤拷锟斤拷时锟侥硷拷锟斤拷锟斤拷目录锟斤拷");
        return null;
       }
      }
@@ -91,12 +91,12 @@ public static String createTempFile(String prefix, String suffix, String dirName
     }
     } catch(IOException e) {
      e.printStackTrace();
-     System.out.println("创建临时文件失败" + e.getMessage());
+     System.out.println("锟斤拷锟斤拷锟斤拷时锟侥硷拷失锟斤拷" + e.getMessage());
      return null;
     }
 }
 	 /**
-	  * 删除某个文件夹下的所有文件夹和文件
+	  * 删锟斤拷某锟斤拷锟侥硷拷锟斤拷锟铰碉拷锟斤拷锟斤拷锟侥硷拷锟叫猴拷锟侥硷拷
 	  * @param delpath String
 	  * @throws FileNotFoundException
 	  * @throws IOException
@@ -121,7 +121,7 @@ public static String createTempFile(String prefix, String suffix, String dirName
 	      System.out.println("absolutepath=" + delfile.getAbsolutePath());
 	      System.out.println("name=" + delfile.getName());
 	      delfile.delete();
-	      System.out.println("删除文件成功");
+	      System.out.println("删锟斤拷锟侥硷拷锟缴癸拷");
 	     }
 	     else if (delfile.isDirectory()) {
 	      deletefile(delpath + "" + filelist[i]);
@@ -140,7 +140,7 @@ public static String createTempFile(String prefix, String suffix, String dirName
 
 	 /**
 	  *
-	  * 读取某个文件夹下的所有文件夹和文件, 返回所有文件名
+	  * 锟斤拷取某锟斤拷锟侥硷拷锟斤拷锟铰碉拷锟斤拷锟斤拷锟侥硷拷锟叫猴拷锟侥硷拷, 锟斤拷锟斤拷锟斤拷锟斤拷锟侥硷拷锟斤拷
 	  * @param filepath String
 	  * @throws FileNotFoundException
 	  * @throws IOException
@@ -152,11 +152,11 @@ public static String createTempFile(String prefix, String suffix, String dirName
 	   pathMap = new HashMap<Integer, String>();
 	  }
 	  File file = new File(filepath);
-	  // 文件
+	  // 锟侥硷拷
 	  if (!file.isDirectory()) {
 	   pathMap.put(pathMap.size(), file.getPath());
 
-	  } else if (file.isDirectory()) { // 如果是目录， 遍历所有子目录取出所有文件名
+	  } else if (file.isDirectory()) { // 锟斤拷锟斤拷锟侥柯硷拷锟?锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷目录取锟斤拷锟斤拷锟斤拷锟侥硷拷锟斤拷
 		   String[] filelist = file.list();
 		   for (int i = 0; i < filelist.length; i++) {
 			    if(!filelist[i].endsWith(".java.vm")){
@@ -166,7 +166,7 @@ public static String createTempFile(String prefix, String suffix, String dirName
 			    if (!readfile.isDirectory()) {
 			    	pathMap.put(pathMap.size(), readfile.getPath());
 		
-			    } else if (readfile.isDirectory()) { // 子目录的目录
+			    } else if (readfile.isDirectory()) { // 锟斤拷目录锟斤拷目录
 			    	readfile(filepath + "/" + filelist[i], pathMap);
 			    }
 		   }

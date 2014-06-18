@@ -1,4 +1,4 @@
-package util;
+package main.java.com.verphen.utils;
 
 public class TypeConvertUtil {
 	

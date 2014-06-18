@@ -1,7 +1,7 @@
 package test;
 
-import generate.generateThing;
-import db.db;
+import main.java.com.verphen.db.db;
+import main.java.com.verphen.generate.generateThing;
 
 public class test {
 	

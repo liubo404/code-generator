@@ -1,4 +1,4 @@
-package db;
+package main.java.com.verphen.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,12 +7,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.Column;
-import models.Table;
+import main.java.com.verphen.model.Column;
+import main.java.com.verphen.model.Table;
+import main.java.com.verphen.utils.TypeConvertUtil;
 
 import org.apache.commons.lang.StringUtils;
-
-import util.TypeConvertUtil;
 
 public class db {
 

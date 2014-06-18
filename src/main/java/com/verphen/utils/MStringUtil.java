@@ -1,4 +1,4 @@
-package util;
+package main.java.com.verphen.utils;
 
 import org.apache.commons.lang.StringUtils;
 

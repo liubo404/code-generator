@@ -1,4 +1,4 @@
-package models;
+package main.java.com.verphen.model;
 
 import java.util.List;
 

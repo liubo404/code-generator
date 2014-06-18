@@ -1,4 +1,4 @@
-package generate;
+package main.java.com.verphen.generate;
 
 import java.io.File;
 import java.net.URL;
@@ -7,15 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import models.Table;
+import main.java.com.verphen.db.db;
+import main.java.com.verphen.model.Table;
+import main.java.com.verphen.utils.CreateFileUtil;
+import main.java.com.verphen.utils.MStringUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.ui.velocity.VelocityEngineUtils;
-
-import util.CreateFileUtil;
-import util.MStringUtil;
-import db.db;
 
 public class generateThing {
 	
