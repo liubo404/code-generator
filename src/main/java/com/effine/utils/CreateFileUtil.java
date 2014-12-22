@@ -1,4 +1,4 @@
-package main.java.com.verphen.utils;
+package com.effine.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -79,7 +79,7 @@ public static String createTempFile(String prefix, String suffix, String dirName
     }
     else {
      File dir = new File(dirName);
-     // �����ʱ�ļ�����Ŀ¼�����ڣ����ȴ���?
+     // �����ʱ�ļ�����Ŀ¼�����ڣ����ȴ���?
      if(!dir.exists()) {
       if(!CreateFileUtil.createDir(dirName)){
        System.out.println("������ʱ�ļ�ʧ�ܣ����ܴ�����ʱ�ļ�����Ŀ¼��");
@@ -156,7 +156,7 @@ public static String createTempFile(String prefix, String suffix, String dirName
 	  if (!file.isDirectory()) {
 	   pathMap.put(pathMap.size(), file.getPath());
 
-	  } else if (file.isDirectory()) { // �����Ŀ¼��?����������Ŀ¼ȡ�������ļ���
+	  } else if (file.isDirectory()) { // �����Ŀ¼��?����������Ŀ¼ȡ�������ļ���
 		   String[] filelist = file.list();
 		   for (int i = 0; i < filelist.length; i++) {
 			    if(!filelist[i].endsWith(".java.vm")){

@@ -1,4 +1,4 @@
-package main.java.com.verphen.model;
+package com.effine.model;
 
 public class Column {
 

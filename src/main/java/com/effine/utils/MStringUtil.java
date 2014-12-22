@@ -1,4 +1,4 @@
-package main.java.com.verphen.utils;
+package com.effine.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

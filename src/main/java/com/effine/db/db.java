@@ -1,4 +1,4 @@
-package main.java.com.verphen.db;
+package com.effine.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,9 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.com.verphen.model.Column;
-import main.java.com.verphen.model.Table;
-import main.java.com.verphen.utils.TypeConvertUtil;
+import com.effine.model.Column;
+import com.effine.model.Table;
+import com.effine.utils.TypeConvertUtil;
 
 public class db {
 
