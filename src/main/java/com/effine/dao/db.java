@@ -1,4 +1,4 @@
-package com.effine.db;
+package com.effine.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

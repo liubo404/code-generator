@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
-import com.effine.db.db;
+import com.effine.dao.db;
 import com.effine.model.Table;
 import com.effine.utils.CreateFileUtil;
 import com.effine.utils.MStringUtil;
