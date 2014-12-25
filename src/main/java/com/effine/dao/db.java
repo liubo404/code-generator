@@ -105,14 +105,6 @@ public class db {
 
 	}
 
-	// public static void closeConn(){
-	// try {
-	// con.close();
-	// } catch(Exception e) {
-	// System.out.println("Sorry,can`t find the Driver!");
-	// }
-	// }
-
 	public static List<String> getTable(String dataBaseName) {
 		List<String> list = new ArrayList<String>();
 		try {
@@ -250,18 +242,6 @@ public class db {
 		}
 		return sb.toString();
 	}
-
-	// public static String getCloumnName(String name) {
-	// String[] m = name.split("_");
-	// StringBuffer sb = new StringBuffer();
-	// sb.append(m[0].toLowerCase());
-	// for (int i = 1; i < m.length; i++) {
-	// String index = m[i].substring(0, 1).toUpperCase();
-	// String el = m[i].substring(1).toLowerCase();
-	// sb.append(index + el);
-	// }
-	// return sb.toString();
-	// }
 
 	public static String getCloumnName(String name) {
 		StringBuffer sb = new StringBuffer();
