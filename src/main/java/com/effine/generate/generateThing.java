@@ -54,14 +54,12 @@ public class generateThing {
 			System.out.println("url is null");
 		} else {
 			String filepath = url.getPath();
-			// System.out.println(filepath);
 			if (filepath.startsWith("file:")) {
 				if (filepath.length() > 5) {
 					filepath = filepath.substring(5);
 				}
 				filepath = filepath.split("!")[0];
 				File file = new File(filepath);
-				// System.out.println(file.getParent());
 				filepath = file.getParent() + "\\template";
 
 			} else {
