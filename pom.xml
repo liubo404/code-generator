@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.effine</groupId>
-	<artifactId>codeGnerater</artifactId>
+	<artifactId>code-gnerater</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<name>codeGenerater</name>
