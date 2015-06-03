@@ -19,6 +19,7 @@ import com.effine.utils.MStringUtil;
 public class generateThing {
 
 	public static final String defaultPackage = "yunlu";
+
 	public static final String defaultDomainsuffix = "com";
 
 	public static void generateAll(String dataBaseName, String outpath)
