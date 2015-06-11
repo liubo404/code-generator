@@ -1,4 +1,4 @@
-package com.effine.model;
+package cn.effine.model;
 
 public class Column {
 

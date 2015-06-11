@@ -1,4 +1,4 @@
-package com.effine.utils;
+package cn.effine.utils;
 
 public class TypeConvertUtil {
 

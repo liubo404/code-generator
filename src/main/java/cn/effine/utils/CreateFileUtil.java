@@ -1,4 +1,4 @@
-package com.effine.utils;
+package cn.effine.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -182,8 +182,7 @@ public class CreateFileUtil {
 
 	public static void main(String[] args) {
 		try {
-			delAll("d:\\test\\com");
-
+			delAll("c:\\test");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

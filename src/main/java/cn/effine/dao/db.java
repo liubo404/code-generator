@@ -1,4 +1,4 @@
-package com.effine.dao;
+package cn.effine.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,9 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.effine.model.Column;
-import com.effine.model.Table;
-import com.effine.utils.TypeConvertUtil;
+import cn.effine.model.Column;
+import cn.effine.model.Table;
+import cn.effine.utils.TypeConvertUtil;
 
 public class db {
 
@@ -17,7 +17,7 @@ public class db {
 	public static Statement stat = null;
 
 	public static void init() {
-		getCon("mysql", "192.168.0.120", 3306, "root", "Yunluqwe");
+		getCon("mysql", "60.194.51.17", 3306, "root", "YUNLU!@#qwe");
 		// getBruceConn();
 	}
 
