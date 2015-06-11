@@ -17,13 +17,10 @@ import cn.effine.utils.CreateFileUtil;
 import cn.effine.utils.MStringUtil;
 
 public class generateThing {
-
 	public static final String defaultPackage = "yunlu";
-
 	public static final String defaultDomainsuffix = "com";
 
-	public static void generateAll(String dataBaseName, String outpath)
-			throws Exception {
+	public static void generateAll(String dataBaseName, String outpath) throws Exception {
 		List<String> tableName = db.getTable(dataBaseName);
 		List<Table> list = db.getColumn(tableName);
 		URL url = Thread.currentThread().getClass().getResource("/template");
@@ -38,18 +35,14 @@ public class generateThing {
 				filepath = filepath.split("!")[0];
 				File file = new File(filepath);
 				filepath = file.getParent() + "\\template";
-
 			} else {
 				System.out.println("is not jar file");
 			}
 			writeFile(filepath, outpath, list);
-
 		}
-
 	}
 
-	public static void generateOneModle(String tableName, String outpath)
-			throws Exception {
+	public static void generateOneModle(String tableName, String outpath) throws Exception {
 		URL url = Thread.currentThread().getClass().getResource("/template");
 		if (url == null) {
 			System.out.println("url is null");
@@ -62,19 +55,14 @@ public class generateThing {
 				filepath = filepath.split("!")[0];
 				File file = new File(filepath);
 				filepath = file.getParent() + "\\template";
-
 			} else {
 				System.out.println("is not jar file");
 			}
 			writeOneModelFile(filepath, outpath, tableName);
-
 		}
-
 	}
 
-	private static void writeFile(String templatepath, String filepath,
-			List<Table> list) {
-
+	private static void writeFile(String templatepath, String filepath, List<Table> list) {
 		// 1.读取模板信息，以及创建文件夹
 		try {
 			String dirName = filepath + "//" + defaultDomainsuffix + "//"
@@ -89,7 +77,6 @@ public class generateThing {
 						.substring(map.get(i).lastIndexOf("\\") + 1);
 				String templateName = name.substring(0, name.indexOf("."));
 				// 创建文件夹
-
 				for (Table tb : list) {
 					String this_folder = dirName;
 					// if(StringUtils.isNotEmpty(tb.getPackageName())){//在defaultDomainsuffix//defaultPackage//下面添加数据库提取的一层_..
@@ -129,7 +116,6 @@ public class generateThing {
 					CreateFileUtil.CreateFile(fileName);
 					CreateFileUtil.write(fileName, result);
 				}
-
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

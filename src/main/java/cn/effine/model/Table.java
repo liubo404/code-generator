@@ -3,7 +3,7 @@ package cn.effine.model;
 import java.util.List;
 
 public class Table {
-
+	
 	private String modelName;
 	private String tableName;
 	private String packageName;

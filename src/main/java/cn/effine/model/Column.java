@@ -1,7 +1,7 @@
 package cn.effine.model;
 
 public class Column {
-
+	
 	private String name;
 	private String column;
 	private String type;

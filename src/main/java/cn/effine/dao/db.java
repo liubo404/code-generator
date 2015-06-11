@@ -164,7 +164,6 @@ public class db {
 	}
 
 	public static List<Table> getColumn(List<String> tableNames) {
-
 		List<Table> listTb = new ArrayList<Table>();
 		try {
 			for (int i = 0; i < tableNames.size(); i++) {
