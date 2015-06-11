@@ -1,4 +1,4 @@
-package com.effine.generate;
+package cn.effine.generate;
 
 import java.io.File;
 import java.net.URL;
@@ -11,10 +11,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
-import com.effine.dao.db;
-import com.effine.model.Table;
-import com.effine.utils.CreateFileUtil;
-import com.effine.utils.MStringUtil;
+import cn.effine.dao.db;
+import cn.effine.model.Table;
+import cn.effine.utils.CreateFileUtil;
+import cn.effine.utils.MStringUtil;
 
 public class generateThing {
 

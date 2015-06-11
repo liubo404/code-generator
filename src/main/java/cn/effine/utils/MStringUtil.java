@@ -1,4 +1,4 @@
-package com.effine.utils;
+package cn.effine.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

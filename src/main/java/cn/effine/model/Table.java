@@ -1,4 +1,4 @@
-package com.effine.model;
+package cn.effine.model;
 
 import java.util.List;
 
@@ -41,5 +41,4 @@ public class Table {
 	public void setPackageName(String packageName) {
 		this.packageName = packageName;
 	}
-
 }
