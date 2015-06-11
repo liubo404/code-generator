@@ -14,7 +14,6 @@ import java.util.Map;
  * 本地文件操作类
  */
 public class NativeFileUtils {
-
 	public static boolean CreateFile(String destFileName) {
 		File file = new File(destFileName);
 		if (file.exists()) {
@@ -52,7 +51,7 @@ public class NativeFileUtils {
 			} else {
 				File dir = new File(dirName);
 				if (!dir.exists()) {
-					if (!NativeDirUtils.createDir(dirName)) {
+					if (!createNativeDir(dirName)) {
 						return null;
 					}
 				}
@@ -140,14 +139,11 @@ public class NativeFileUtils {
 			r = br.readLine();
 
 		}
-
 		return str;
-
 	}
 
 	public static void write(String file, String context) {
 		try {
-
 			BufferedWriter output = new BufferedWriter(new FileWriter(file));
 			output.write(context);
 			output.close();
@@ -168,12 +164,21 @@ public class NativeFileUtils {
 		f.delete();
 	}
 
-	public static void main(String[] args) {
-		try {
-			delAll("c:\\test");
-		} catch (Exception e) {
-			e.printStackTrace();
+	/**
+	 * 创建本地目录
+	 *
+	 * @param pathname
+	 *            待创建的目标目录路径
+	 * @return Boolean
+	 */
+	public static boolean createNativeDir(String pathname) {
+		File dir = new File(pathname);
+		if (!dir.exists()) {
+			// File.separator在不同的操作系统的表现：windows("\")、linux("/")
+			if (!pathname.endsWith(File.separator))
+				pathname = pathname + File.separator;
+			return dir.mkdirs();
 		}
+		return true;
 	}
-
 }

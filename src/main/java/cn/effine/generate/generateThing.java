@@ -14,7 +14,6 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 import cn.effine.dao.db;
 import cn.effine.model.Table;
 import cn.effine.utils.MStringUtil;
-import cn.effine.utils.NativeDirUtils;
 import cn.effine.utils.NativeFileUtils;
 
 public class generateThing {
@@ -68,7 +67,7 @@ public class generateThing {
 		try {
 			String dirName = filepath + "//" + defaultDomainsuffix + "//"
 					+ Table.domain + "//";
-			NativeDirUtils.createDir(dirName);
+			NativeFileUtils.createNativeDir(dirName);
 			Map<Integer, String> map = NativeFileUtils.readfile(templatepath,
 					null);
 			for (int i = 0; i < map.size(); i++) {
@@ -131,7 +130,7 @@ public class generateThing {
 		try {
 			String dirName = filepath + "//" + defaultDomainsuffix + "//"
 					+ Table.domain + "//";
-			NativeDirUtils.createDir(dirName);
+			NativeFileUtils.createNativeDir(dirName);
 			Map<Integer, String> map = NativeFileUtils.readfile(templatepath,
 					null);
 			for (int i = 0; i < map.size(); i++) {
