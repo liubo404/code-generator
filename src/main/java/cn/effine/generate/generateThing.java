@@ -72,16 +72,12 @@ public class generateThing {
 					null);
 			for (int i = 0; i < map.size(); i++) {
 				String template = map.get(i);
-				System.out.println(template);
 				String name = template
 						.substring(map.get(i).lastIndexOf("\\") + 1);
 				String templateName = name.substring(0, name.indexOf("."));
 				// 创建文件夹
 				for (Table tb : list) {
 					String this_folder = dirName;
-					// if(StringUtils.isNotEmpty(tb.getPackageName())){//在defaultDomainsuffix//defaultPackage//下面添加数据库提取的一层_..
-					// this_folder = this_folder +tb.getPackageName();
-					// }
 					if (StringUtils.isNotEmpty(templateName)
 							&& templateName.equalsIgnoreCase("queryImpl")) {
 						this_folder = this_folder + "query";
@@ -119,7 +115,6 @@ public class generateThing {
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			System.out.println("Write file error!");
 		}
 	}
 
@@ -135,20 +130,12 @@ public class generateThing {
 					null);
 			for (int i = 0; i < map.size(); i++) {
 				String template = map.get(i);
-				System.out.println(template);
-				String name = template
-						.substring(map.get(i).lastIndexOf("\\") + 1);
+				String name = template.substring(map.get(i).lastIndexOf("\\") + 1);
 				String templateName = name.substring(0, name.indexOf("."));
 				// 创建文件夹
-
 				Table table = db.getColumnByOneTable(tableName);
-
 				String this_folder = dirName;
-				// if(StringUtils.isNotEmpty(table.getPackageName())){
-				// this_folder = this_folder +table.getPackageName();
-				// }
-				if (StringUtils.isNotEmpty(templateName)
-						&& templateName.equalsIgnoreCase("queryImpl")) {
+				if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("queryImpl")) {
 					this_folder = this_folder + "query";
 				}
 				if (StringUtils.isNotEmpty(templateName)
@@ -187,11 +174,6 @@ public class generateThing {
 					fileName = this_folder + "/" + table.getModelName()
 							+ ".java";
 				}
-				// else if(templateName.equals("queryImpl")){
-				// System.out.println("this......................"+this_folder);
-				// fileName = this_folder +"/"+ table.getModelName() + ".java";
-				// }
-
 				else {
 					String uptemplateName = MStringUtil.upperCase(templateName,
 							0);
@@ -204,7 +186,6 @@ public class generateThing {
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			System.out.println("Write file error!");
 		}
 	}
 
@@ -214,7 +195,6 @@ public class generateThing {
 		try {
 
 			String fileDir = java.net.URLDecoder.decode(templatePath, "utf-8");
-			System.out.println(fileDir);
 			VelocityEngine ve = new VelocityEngine();
 			Properties properties = new Properties();
 			properties.setProperty(ve.FILE_RESOURCE_LOADER_PATH, fileDir);

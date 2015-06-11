@@ -18,11 +18,9 @@ public class db {
 
 	public static void init() {
 		getCon("mysql", "60.194.51.17", 3306, "root", "YUNLU!@#qwe");
-		// getBruceConn();
 	}
 
 	public static void initBruce() {
-		// getCon("mysql", "192.168.0.120", 3306, "root", "Yunluqwe");
 		getBruceConn();
 	}
 
@@ -43,12 +41,10 @@ public class db {
 				name = new String(name.getBytes("ISO-8859-1"), "GB2312");
 				list.add(name);
 			}
-			// rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
-
 	}
 
 	private static void getCon(String type, String dataSource, Integer port,
@@ -59,13 +55,10 @@ public class db {
 		if (type.equals("mysql")) {
 			driver = "com.mysql.jdbc.Driver";
 			urlstart = "jdbc:mysql://";
-			// urlstart =
-			// "jdbc:mysql://192.168.0.120:3306/yunlu?characterEncoding=UTF-8";
 			if (port == null)
 				port = 3306;
 		}
 		String url = urlstart + dataSource + ":" + port;
-		System.out.println(url + "-------url");
 		try {
 			// 加载驱动程序
 			Class.forName(driver);
@@ -78,31 +71,25 @@ public class db {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Sorry,can`t find the Driver!");
 		}
-
 	}
 
 	private static void getBruceConn() {
 		// 驱动程序名
 		String driver = "com.mysql.jdbc.Driver";
 		String url = "jdbc:mysql://192.168.0.120:3306/yunlu";
-		System.out.println(url + "-------url");
 		try {
 			// 加载驱动程序
 			Class.forName(driver);
 			// 连续数据库
 			con = DriverManager.getConnection(url, "root", "Yunluqwe");
 			if (!con.isClosed())
-				System.out.println("Succeeded connecting to the Database!");
 			// statement用来执行SQL语句
 			stat = con.createStatement();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Sorry,can`t find the Driver!");
 		}
-
 	}
 
 	public static List<String> getTable(String dataBaseName) {
@@ -119,7 +106,6 @@ public class db {
 				name = new String(name.getBytes("ISO-8859-1"), "GB2312");
 				list.add(name);
 			}
-			// rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -142,11 +128,8 @@ public class db {
 				column_type = rs.getString("type");
 				String pk = rs.getString("key");
 				length = getLength(length, column_type);
-
-				column_field = new String(column_field.getBytes("ISO-8859-1"),
-						"GB2312");
-				column_type = new String(column_type.getBytes("ISO-8859-1"),
-						"GB2312");
+				column_field = new String(column_field.getBytes("ISO-8859-1"), "GB2312");
+				column_type = new String(column_type.getBytes("ISO-8859-1"), "GB2312");
 				Column p = new Column();
 				p.setType(TypeConvertUtil.getType(column_type));
 				p.setName(column_field);
@@ -155,8 +138,6 @@ public class db {
 				list.add(p);
 			}
 			tb.setPropertyList(list);
-			// rs.close();
-			// closeConn();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -168,10 +149,6 @@ public class db {
 		try {
 			for (int i = 0; i < tableNames.size(); i++) {
 				String tableName = tableNames.get(i);
-				// if("yl_course".equals(tableName)) {
-				// System.out.println(tableName);
-				// continue;
-				// }
 				if (tableName != null && !tableName.equals("")) {
 					String sql = "show columns from " + tableName;
 					ResultSet rs = stat.executeQuery(sql);
@@ -186,10 +163,8 @@ public class db {
 						column_type = rs.getString("type");
 						String pk = rs.getString("key");
 						length = getLength(length, column_type);
-						column_field = new String(
-								column_field.getBytes("ISO-8859-1"), "GB2312");
-						column_type = new String(
-								column_type.getBytes("ISO-8859-1"), "GB2312");
+						column_field = new String(column_field.getBytes("ISO-8859-1"), "GB2312");
+						column_type = new String(column_type.getBytes("ISO-8859-1"), "GB2312");
 						Column p = new Column();
 						p.setType(TypeConvertUtil.getType(column_type));
 						p.setName(column_field);
@@ -199,10 +174,8 @@ public class db {
 					}
 					tb.setPropertyList(list);
 					listTb.add(tb);
-					// rs.close();
 				}
 			}
-			// closeConn();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -211,8 +184,7 @@ public class db {
 
 	private static int getLength(int length, String column_type) {
 		if (column_type.contains("(")) {
-			length = Integer.parseInt(column_type.substring(
-					column_type.indexOf("(") + 1, column_type.indexOf(")")));
+			length = Integer.parseInt(column_type.substring(column_type.indexOf("(") + 1, column_type.indexOf(")")));
 		}
 		return length;
 	}

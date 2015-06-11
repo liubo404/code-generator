@@ -64,48 +64,36 @@ public class NativeFileUtils {
 		}
 	}
 
-	public static boolean deletefile(String delpath)
-			throws FileNotFoundException, IOException {
+	public static boolean deletefile(String delpath) throws FileNotFoundException, IOException {
 		try {
-
 			File file = new File(delpath);
 			if (!file.isDirectory()) {
-				System.out.println("1");
 				file.delete();
 			} else if (file.isDirectory()) {
-				System.out.println("2");
 				String[] filelist = file.list();
 				for (int i = 0; i < filelist.length; i++) {
 					File delfile = new File(delpath + "/" + filelist[i]);
 					if (!delfile.isDirectory()) {
-						System.out.println("path=" + delfile.getPath());
-						System.out.println("absolutepath="
-								+ delfile.getAbsolutePath());
-						System.out.println("name=" + delfile.getName());
 						delfile.delete();
 					} else if (delfile.isDirectory()) {
 						deletefile(delpath + "" + filelist[i]);
 					}
 				}
 				file.delete();
-
 			}
-
 		} catch (FileNotFoundException e) {
-			System.out.println("deletefile() Exception:" + e.getMessage());
+			e.printStackTrace();
 		}
 		return true;
 	}
 
-	public static Map<Integer, String> readfile(String filepath,
-			Map<Integer, String> pathMap) throws Exception {
+	public static Map<Integer, String> readfile(String filepath, Map<Integer, String> pathMap) throws Exception {
 		if (pathMap == null) {
 			pathMap = new HashMap<Integer, String>();
 		}
 		File file = new File(filepath);
 		if (!file.isDirectory()) {
 			pathMap.put(pathMap.size(), file.getPath());
-
 		} else if (file.isDirectory()) {
 			String[] filelist = file.list();
 			for (int i = 0; i < filelist.length; i++) {
@@ -115,7 +103,6 @@ public class NativeFileUtils {
 				File readfile = new File(filepath + "/" + filelist[i]);
 				if (!readfile.isDirectory()) {
 					pathMap.put(pathMap.size(), readfile.getPath());
-
 				} else if (readfile.isDirectory()) {
 					readfile(filepath + "/" + filelist[i], pathMap);
 				}
@@ -125,19 +112,12 @@ public class NativeFileUtils {
 	}
 
 	static String readtxt(String file) throws IOException {
-
 		BufferedReader br = new BufferedReader(new FileReader(file));
-
 		String str = "";
-
 		String r = br.readLine();
-
 		while (r != null) {
-
 			str += r;
-
 			r = br.readLine();
-
 		}
 		return str;
 	}
