@@ -13,8 +13,9 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import cn.effine.dao.db;
 import cn.effine.model.Table;
-import cn.effine.utils.CreateFileUtil;
 import cn.effine.utils.MStringUtil;
+import cn.effine.utils.NativeDirUtils;
+import cn.effine.utils.NativeFileUtils;
 
 public class generateThing {
 	public static final String defaultPackage = "yunlu";
@@ -67,8 +68,8 @@ public class generateThing {
 		try {
 			String dirName = filepath + "//" + defaultDomainsuffix + "//"
 					+ Table.domain + "//";
-			CreateFileUtil.createDir(dirName);
-			Map<Integer, String> map = CreateFileUtil.readfile(templatepath,
+			NativeDirUtils.createDir(dirName);
+			Map<Integer, String> map = NativeFileUtils.readfile(templatepath,
 					null);
 			for (int i = 0; i < map.size(); i++) {
 				String template = map.get(i);
@@ -113,8 +114,8 @@ public class generateThing {
 						fileName = this_folder + "/" + tb.getModelName()
 								+ uptemplateName + ".java";
 					}
-					CreateFileUtil.CreateFile(fileName);
-					CreateFileUtil.write(fileName, result);
+					NativeFileUtils.CreateFile(fileName);
+					NativeFileUtils.write(fileName, result);
 				}
 			}
 		} catch (Exception ex) {
@@ -130,8 +131,8 @@ public class generateThing {
 		try {
 			String dirName = filepath + "//" + defaultDomainsuffix + "//"
 					+ Table.domain + "//";
-			CreateFileUtil.createDir(dirName);
-			Map<Integer, String> map = CreateFileUtil.readfile(templatepath,
+			NativeDirUtils.createDir(dirName);
+			Map<Integer, String> map = NativeFileUtils.readfile(templatepath,
 					null);
 			for (int i = 0; i < map.size(); i++) {
 				String template = map.get(i);
@@ -198,8 +199,8 @@ public class generateThing {
 					fileName = this_folder + "/" + table.getModelName()
 							+ uptemplateName + ".java";
 				}
-				CreateFileUtil.CreateFile(fileName);
-				CreateFileUtil.write(fileName, result);
+				NativeFileUtils.CreateFile(fileName);
+				NativeFileUtils.write(fileName, result);
 
 			}
 		} catch (Exception ex) {

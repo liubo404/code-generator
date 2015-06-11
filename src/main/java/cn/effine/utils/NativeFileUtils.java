@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateFileUtil {
+/**
+ * 本地文件操作类
+ */
+public class NativeFileUtils {
 
 	public static boolean CreateFile(String destFileName) {
 		File file = new File(destFileName);
@@ -39,20 +42,6 @@ public class CreateFileUtil {
 		}
 	}
 
-	public static boolean createDir(String destDirName) {
-		File dir = new File(destDirName);
-		if (dir.exists()) {
-			return false;
-		}
-		if (!destDirName.endsWith(File.separator))
-			destDirName = destDirName + File.separator;
-		if (dir.mkdirs()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public static String createTempFile(String prefix, String suffix,
 			String dirName) {
 		File tempFile = null;
@@ -63,7 +52,7 @@ public class CreateFileUtil {
 			} else {
 				File dir = new File(dirName);
 				if (!dir.exists()) {
-					if (!CreateFileUtil.createDir(dirName)) {
+					if (!NativeDirUtils.createDir(dirName)) {
 						return null;
 					}
 				}
@@ -115,7 +104,6 @@ public class CreateFileUtil {
 			pathMap = new HashMap<Integer, String>();
 		}
 		File file = new File(filepath);
-		// �ļ�
 		if (!file.isDirectory()) {
 			pathMap.put(pathMap.size(), file.getPath());
 
