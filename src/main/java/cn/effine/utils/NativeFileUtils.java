@@ -119,6 +119,7 @@ public class NativeFileUtils {
 			str += r;
 			r = br.readLine();
 		}
+		br.close();
 		return str;
 	}
 

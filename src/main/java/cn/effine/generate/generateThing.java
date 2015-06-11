@@ -189,16 +189,15 @@ public class generateThing {
 		}
 	}
 
-	public static String loadTemplate(String templatePath, Table table,
-			String templateName) {
+	@SuppressWarnings("static-access")
+	public static String loadTemplate(String templatePath, Table table, String templateName) {
 		String result = "";
 		try {
-
 			String fileDir = java.net.URLDecoder.decode(templatePath, "utf-8");
-			VelocityEngine ve = new VelocityEngine();
+			VelocityEngine velEngine = new VelocityEngine();
 			Properties properties = new Properties();
-			properties.setProperty(ve.FILE_RESOURCE_LOADER_PATH, fileDir);
-			ve.init(properties); // 初始化
+			properties.setProperty(velEngine.FILE_RESOURCE_LOADER_PATH, fileDir);
+			velEngine.init(properties); // 初始化
 
 			// 3.把数据填入上下文
 			Map<String, Object> cont = new HashMap<String, Object>();
@@ -216,7 +215,7 @@ public class generateThing {
 				cont.put("namespace", table.domain);
 			}
 			cont.put("domain", table.domain);
-			result = VelocityEngineUtils.mergeTemplateIntoString(ve,
+			result = VelocityEngineUtils.mergeTemplateIntoString(velEngine,
 					templateName, "utf-8", cont);
 		} catch (Exception e) {
 			e.printStackTrace();

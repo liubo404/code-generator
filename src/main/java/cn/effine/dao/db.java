@@ -112,6 +112,7 @@ public class db {
 		return list;
 	}
 
+	@SuppressWarnings("unused")
 	public static Table getColumnByOneTable(String tableName) {
 		Table tb = null;
 		try {
@@ -144,6 +145,7 @@ public class db {
 		return tb;
 	}
 
+	@SuppressWarnings("unused")
 	public static List<Table> getColumn(List<String> tableNames) {
 		List<Table> listTb = new ArrayList<Table>();
 		try {
