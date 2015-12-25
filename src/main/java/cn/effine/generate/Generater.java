@@ -16,14 +16,21 @@ import cn.effine.model.Table;
 import cn.effine.utils.CreateFileUtil;
 import cn.effine.utils.MStringUtil;
 
-public class generateThing {
+public class Generater {
 
-	public static final String defaultPackage = "yunlu";
-	public static final String defaultDomainsuffix = "com";
+	public static final String defaultPackage = "effine";
+	public static final String defaultDomainsuffix = "cn";
 
-	public static void generateAll(String dataBaseName, String outpath)
-			throws Exception {
-		List<String> tableName = db.getTable(dataBaseName);
+	/**
+	 * 生成所有
+	 *
+	 * @param DBName
+	 *            数据库名
+	 * @param outpath
+	 *            输出路径
+	 */
+	public static void generateAll(String DBName, String outpath){
+		List<String> tableName = db.getTable(DBName);
 		List<Table> list = db.getColumn(tableName);
 		URL url = Thread.currentThread().getClass().getResource("/template");
 		if (url == null) {
@@ -44,7 +51,6 @@ public class generateThing {
 			writeFile(filepath, outpath, list);
 
 		}
-
 	}
 
 	public static void generateOneModle(String tableName, String outpath)

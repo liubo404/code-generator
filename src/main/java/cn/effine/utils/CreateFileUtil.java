@@ -109,13 +109,11 @@ public class CreateFileUtil {
 		return true;
 	}
 
-	public static Map<Integer, String> readfile(String filepath,
-			Map<Integer, String> pathMap) throws Exception {
+	public static Map<Integer, String> readfile(String filepath, Map<Integer, String> pathMap) throws Exception {
 		if (pathMap == null) {
 			pathMap = new HashMap<Integer, String>();
 		}
 		File file = new File(filepath);
-		// �ļ�
 		if (!file.isDirectory()) {
 			pathMap.put(pathMap.size(), file.getPath());
 

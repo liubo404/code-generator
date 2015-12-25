@@ -16,8 +16,11 @@ public class db {
 	public static Connection con = null;
 	public static Statement stat = null;
 
+	/**
+	 * 初始化数据库连接
+	 */
 	public static void init() {
-		getCon("mysql", "60.194.51.17", 3306, "root", "YUNLU!@#qwe");
+		getCon("mysql", "localhost", 3306, "root", "aichuan");
 		// getBruceConn();
 	}
 
@@ -40,7 +43,7 @@ public class db {
 			int order = 1;
 			while (rs.next()) {
 				name = rs.getNString(order);
-				name = new String(name.getBytes("ISO-8859-1"), "GB2312");
+				name = new String(name.getBytes("ISO-8859-1"), "utf-8");
 				list.add(name);
 			}
 			// rs.close();
@@ -51,8 +54,7 @@ public class db {
 
 	}
 
-	private static void getCon(String type, String dataSource, Integer port,
-			String user, String password) {
+	private static void getCon(String type, String dataSource, Integer port, String user, String password) {
 		// 驱动程序名
 		String driver = "";
 		String urlstart = "";
@@ -106,6 +108,7 @@ public class db {
 	}
 
 	public static List<String> getTable(String dataBaseName) {
+		init();
 		List<String> list = new ArrayList<String>();
 		try {
 			String useSQL = "use " + dataBaseName;

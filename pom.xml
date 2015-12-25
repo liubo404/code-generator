@@ -4,17 +4,17 @@
 
 	<groupId>com.effine</groupId>
 	<artifactId>code-gnerater</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1</version>
+	<packaging>war</packaging>
 
-	<name>codeGenerater</name>
-	<url>https://github.com/verphen/codeGenerater</url>
+	<name>code-gnerater</name>
+	<url>https://github.com/effine/code-generater</url>
 
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -38,4 +38,29 @@
 			<version>1.1.1.RELEASE</version>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>utf-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<encoding>utf-8</encoding>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
+		<finalName>code-generator</finalName>
+	</build>
 </project>
