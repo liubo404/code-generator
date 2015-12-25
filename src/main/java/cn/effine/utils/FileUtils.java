@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateFileUtil {
+public class FileUtils {
 
 	public static boolean CreateFile(String destFileName) {
 		File file = new File(destFileName);
@@ -39,18 +39,18 @@ public class CreateFileUtil {
 		}
 	}
 
-	public static boolean createDir(String destDirName) {
-		File dir = new File(destDirName);
-		if (dir.exists()) {
-			return false;
-		}
-		if (!destDirName.endsWith(File.separator))
-			destDirName = destDirName + File.separator;
-		if (dir.mkdirs()) {
+	/**
+	 * 创建目录
+	 *
+	 * @param srcDir
+	 *            待创建目录
+	 * @return Boolean
+	 */
+	public static boolean createDir(String srcDir) {
+		File file = new File(srcDir);
+		if(file.exists())
 			return true;
-		} else {
-			return false;
-		}
+		return file.mkdirs(); 
 	}
 
 	public static String createTempFile(String prefix, String suffix,
@@ -63,7 +63,7 @@ public class CreateFileUtil {
 			} else {
 				File dir = new File(dirName);
 				if (!dir.exists()) {
-					if (!CreateFileUtil.createDir(dirName)) {
+					if (!FileUtils.createDir(dirName)) {
 						return null;
 					}
 				}
@@ -109,15 +109,20 @@ public class CreateFileUtil {
 		return true;
 	}
 
-	public static Map<Integer, String> readfile(String filepath, Map<Integer, String> pathMap) throws Exception {
+	/**
+	 * 读取文件
+	 *
+	 * @param filepath
+	 *            带读取文件目录
+	 * @param pathMap
+	 * @return
+	 */
+	public static Map<Integer, String> readfile(String filepath, Map<Integer, String> pathMap){
 		if (pathMap == null) {
 			pathMap = new HashMap<Integer, String>();
 		}
 		File file = new File(filepath);
-		if (!file.isDirectory()) {
-			pathMap.put(pathMap.size(), file.getPath());
-
-		} else if (file.isDirectory()) {
+		if (file.isDirectory()) {
 			String[] filelist = file.list();
 			for (int i = 0; i < filelist.length; i++) {
 				if (!filelist[i].endsWith(".java.vm")) {
@@ -131,6 +136,8 @@ public class CreateFileUtil {
 					readfile(filepath + "/" + filelist[i], pathMap);
 				}
 			}
+		}else{
+			pathMap.put(pathMap.size(), file.getPath());
 		}
 		return pathMap;
 	}

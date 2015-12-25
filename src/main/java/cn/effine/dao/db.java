@@ -3,6 +3,7 @@ package cn.effine.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,172 +14,103 @@ import cn.effine.utils.TypeConvertUtil;
 
 public class db {
 
-	public static Connection con = null;
-	public static Statement stat = null;
+	public static Connection connection = null;
+	public static Statement statement = null;
+
 
 	/**
-	 * 初始化数据库连接
+	 * 获取数据库连接
+	 *
+	 * @param type
+	 *            数据库类型
+	 * @param url
+	 *            数据库地址URL
+	 * @param port
+	 *            数据库端口
+	 * @param username
+	 *            用户名
+	 * @param password
+	 *            密码
 	 */
-	public static void init() {
-		getCon("mysql", "localhost", 3306, "root", "aichuan");
-		// getBruceConn();
-	}
-
-	public static void initBruce() {
-		// getCon("mysql", "192.168.0.120", 3306, "root", "Yunluqwe");
-		getBruceConn();
-	}
-
-	public static void init(String type, String dataSource, Integer port,
-			String user, String password) {
-		getCon(type, dataSource, port, user, password);
-	}
-
-	public static List<String> getDatabase() {
-		List<String> list = new ArrayList<String>();
+	private static void getConnection(String type, String url, Integer port, String username, String password) {
+		// 驱动程序名
+		String driver = null;
+		StringBuilder urlstart = new StringBuilder();
+		
+		// mysql数据库
+		if (type.equals("mysql")) {
+			driver = "com.mysql.jdbc.Driver";
+			urlstart.append("jdbc:mysql://");
+			urlstart.append(url);
+			urlstart.append(":");
+			urlstart.append(port);
+			urlstart.append("/");
+			urlstart.append("shopping");
+			urlstart.append("?characterEncoding=UTF-8");
+		}
 		try {
-			String sql = "SHOW databases";
-			ResultSet rs = stat.executeQuery(sql);
-			String name = null;
-			int order = 1;
+			Class.forName(driver);	// 加载驱动程序
+			connection = DriverManager.getConnection(urlstart.toString(), username, password);	// 连续数据库
+			if (!connection.isClosed()){
+				statement = connection.createStatement(); 	// statement用来执行SQL语句
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 获取数据库所有表名列表
+	 *
+	 * @param dataBaseName
+	 *            数据库名
+	 * @return 数据库表名列表
+	 */
+	public static List<String> getTable(String dataBaseName) {
+		getConnection("mysql", "192.168.199.165", 3306, "root", "aichuan");
+		List<String> list = new ArrayList<String>();
+		String useSQL = "use " + dataBaseName;
+		String sql = " SHOW TABLES";
+		String name = null;
+		ResultSet rs = null;
+		try {
+			statement.executeQuery(useSQL);
+			rs = statement.executeQuery(sql);
 			while (rs.next()) {
-				name = rs.getNString(order);
+				name = rs.getNString(1);
 				name = new String(name.getBytes("ISO-8859-1"), "utf-8");
 				list.add(name);
 			}
-			// rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		return list;
-
-	}
-
-	private static void getCon(String type, String dataSource, Integer port, String user, String password) {
-		// 驱动程序名
-		String driver = "";
-		String urlstart = "";
-		if (type.equals("mysql")) {
-			driver = "com.mysql.jdbc.Driver";
-			urlstart = "jdbc:mysql://";
-			// urlstart =
-			// "jdbc:mysql://192.168.0.120:3306/yunlu?characterEncoding=UTF-8";
-			if (port == null)
-				port = 3306;
-		}
-		String url = urlstart + dataSource + ":" + port;
-		System.out.println(url + "-------url");
-		try {
-			// 加载驱动程序
-			Class.forName(driver);
-			// 连续数据库
-			con = DriverManager.getConnection(url, user, password);
-			if (!con.isClosed())
-				System.out.println("Succeeded connecting to the Database!");
-			// statement用来执行SQL语句
-			stat = con.createStatement();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Sorry,can`t find the Driver!");
-		}
-
-	}
-
-	private static void getBruceConn() {
-		// 驱动程序名
-		String driver = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://192.168.0.120:3306/yunlu";
-		System.out.println(url + "-------url");
-		try {
-			// 加载驱动程序
-			Class.forName(driver);
-			// 连续数据库
-			con = DriverManager.getConnection(url, "root", "Yunluqwe");
-			if (!con.isClosed())
-				System.out.println("Succeeded connecting to the Database!");
-			// statement用来执行SQL语句
-			stat = con.createStatement();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Sorry,can`t find the Driver!");
-		}
-
-	}
-
-	public static List<String> getTable(String dataBaseName) {
-		init();
-		List<String> list = new ArrayList<String>();
-		try {
-			String useSQL = "use " + dataBaseName;
-			stat.executeQuery(useSQL);
-			String sql = " SHOW TABLES";
-			ResultSet rs = stat.executeQuery(sql);
-			String name = null;
-			int order = 1;
-			while (rs.next()) {
-				name = rs.getNString(order);
-				name = new String(name.getBytes("ISO-8859-1"), "GB2312");
-				list.add(name);
+		}finally{
+			if(null != rs){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
-			// rs.close();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return list;
 	}
-
-	public static Table getColumnByOneTable(String tableName) {
-		Table tb = null;
-		try {
-			String sql = "show columns from " + tableName;
-			ResultSet rs = stat.executeQuery(sql);
-			int length = 0;
-			tb = getTableByTableName(tableName);
-
-			List<Column> list = new ArrayList<Column>();
-			while (rs.next()) {
-				String column_field = null;
-				String column_type = null;
-				column_field = rs.getString("field");
-				column_type = rs.getString("type");
-				String pk = rs.getString("key");
-				length = getLength(length, column_type);
-
-				column_field = new String(column_field.getBytes("ISO-8859-1"),
-						"GB2312");
-				column_type = new String(column_type.getBytes("ISO-8859-1"),
-						"GB2312");
-				Column p = new Column();
-				p.setType(TypeConvertUtil.getType(column_type));
-				p.setName(column_field);
-				p.setColumn(getCloumnName(column_field));
-				p.setLength(length);
-				list.add(p);
-			}
-			tb.setPropertyList(list);
-			// rs.close();
-			// closeConn();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return tb;
-	}
-
+	
+	/**
+	 * 获取数据库表的列
+	 *
+	 * @param tableNames
+	 *            数据库表名列表
+	 * @return
+	 */
 	public static List<Table> getColumn(List<String> tableNames) {
-
 		List<Table> listTb = new ArrayList<Table>();
 		try {
 			for (int i = 0; i < tableNames.size(); i++) {
 				String tableName = tableNames.get(i);
-				// if("yl_course".equals(tableName)) {
-				// System.out.println(tableName);
-				// continue;
-				// }
 				if (tableName != null && !tableName.equals("")) {
 					String sql = "show columns from " + tableName;
-					ResultSet rs = stat.executeQuery(sql);
+					ResultSet rs = statement.executeQuery(sql);
 					int length = 0;
 					Table tb = getTableByTableName(tableName);
 
@@ -211,6 +143,62 @@ public class db {
 			e.printStackTrace();
 		}
 		return listTb;
+	}
+	
+	public static List<String> getDatabase() {
+		List<String> list = new ArrayList<String>();
+		try {
+			String sql = "SHOW databases";
+			ResultSet rs = statement.executeQuery(sql);
+			String name = null;
+			int order = 1;
+			while (rs.next()) {
+				name = rs.getNString(order);
+				name = new String(name.getBytes("ISO-8859-1"), "utf-8");
+				list.add(name);
+			}
+			// rs.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public static Table getColumnByOneTable(String tableName) {
+		Table tb = null;
+		try {
+			String sql = "show columns from " + tableName;
+			ResultSet rs = statement.executeQuery(sql);
+			int length = 0;
+			tb = getTableByTableName(tableName);
+
+			List<Column> list = new ArrayList<Column>();
+			while (rs.next()) {
+				String column_field = null;
+				String column_type = null;
+				column_field = rs.getString("field");
+				column_type = rs.getString("type");
+				String pk = rs.getString("key");
+				length = getLength(length, column_type);
+
+				column_field = new String(column_field.getBytes("ISO-8859-1"),
+						"GB2312");
+				column_type = new String(column_type.getBytes("ISO-8859-1"),
+						"GB2312");
+				Column p = new Column();
+				p.setType(TypeConvertUtil.getType(column_type));
+				p.setName(column_field);
+				p.setColumn(getCloumnName(column_field));
+				p.setLength(length);
+				list.add(p);
+			}
+			tb.setPropertyList(list);
+			// rs.close();
+			// closeConn();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tb;
 	}
 
 	private static int getLength(int length, String column_type) {

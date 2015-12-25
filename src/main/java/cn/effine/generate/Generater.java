@@ -13,7 +13,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import cn.effine.dao.db;
 import cn.effine.model.Table;
-import cn.effine.utils.CreateFileUtil;
+import cn.effine.utils.FileUtils;
 import cn.effine.utils.MStringUtil;
 
 public class Generater {
@@ -22,7 +22,7 @@ public class Generater {
 	public static final String defaultDomainsuffix = "cn";
 
 	/**
-	 * 生成所有
+	 * 生成所有数据库表对应的MVC文件
 	 *
 	 * @param DBName
 	 *            数据库名
@@ -30,24 +30,24 @@ public class Generater {
 	 *            输出路径
 	 */
 	public static void generateAll(String DBName, String outpath){
-		List<String> tableName = db.getTable(DBName);
-		List<Table> list = db.getColumn(tableName);
+		List<String> tableNameList = db.getTable(DBName);
+		List<Table> list = db.getColumn(tableNameList);
 		URL url = Thread.currentThread().getClass().getResource("/template");
 		if (url == null) {
 			System.out.println("url is null");
 		} else {
 			String filepath = url.getPath();
-			if (filepath.startsWith("file:")) {
-				if (filepath.length() > 5) {
-					filepath = filepath.substring(5);
-				}
-				filepath = filepath.split("!")[0];
-				File file = new File(filepath);
-				filepath = file.getParent() + "\\template";
-
-			} else {
-				System.out.println("is not jar file");
-			}
+//			if (filepath.startsWith("file:")) {
+//				if (filepath.length() > 5) {
+//					filepath = filepath.substring(5);
+//				}
+//				filepath = filepath.split("!")[0];
+//				File file = new File(filepath);
+//				filepath = file.getParent() + "\\template";
+//
+//			} else {
+//				System.out.println("is not jar file");
+//			}
 			writeFile(filepath, outpath, list);
 
 		}
@@ -77,21 +77,16 @@ public class Generater {
 
 	}
 
-	private static void writeFile(String templatepath, String filepath,
-			List<Table> list) {
+	private static void writeFile(String templatepath, String filepath, List<Table> list) {
 
 		// 1.读取模板信息，以及创建文件夹
 		try {
-			String dirName = filepath + "//" + defaultDomainsuffix + "//"
-					+ Table.domain + "//";
-			CreateFileUtil.createDir(dirName);
-			Map<Integer, String> map = CreateFileUtil.readfile(templatepath,
-					null);
+			String dirName = filepath + "//" + defaultDomainsuffix + "//" + Table.domain + "//";
+			FileUtils.createDir(dirName);
+			Map<Integer, String> map = FileUtils.readfile(templatepath, null);
 			for (int i = 0; i < map.size(); i++) {
 				String template = map.get(i);
-				System.out.println(template);
-				String name = template
-						.substring(map.get(i).lastIndexOf("\\") + 1);
+				String name = template.substring(map.get(i).lastIndexOf("\\") + 1);
 				String templateName = name.substring(0, name.indexOf("."));
 				// 创建文件夹
 
@@ -131,8 +126,8 @@ public class Generater {
 						fileName = this_folder + "/" + tb.getModelName()
 								+ uptemplateName + ".java";
 					}
-					CreateFileUtil.CreateFile(fileName);
-					CreateFileUtil.write(fileName, result);
+					FileUtils.CreateFile(fileName);
+					FileUtils.write(fileName, result);
 				}
 
 			}
@@ -149,8 +144,8 @@ public class Generater {
 		try {
 			String dirName = filepath + "//" + defaultDomainsuffix + "//"
 					+ Table.domain + "//";
-			CreateFileUtil.createDir(dirName);
-			Map<Integer, String> map = CreateFileUtil.readfile(templatepath,
+			FileUtils.createDir(dirName);
+			Map<Integer, String> map = FileUtils.readfile(templatepath,
 					null);
 			for (int i = 0; i < map.size(); i++) {
 				String template = map.get(i);
@@ -217,8 +212,8 @@ public class Generater {
 					fileName = this_folder + "/" + table.getModelName()
 							+ uptemplateName + ".java";
 				}
-				CreateFileUtil.CreateFile(fileName);
-				CreateFileUtil.write(fileName, result);
+				FileUtils.CreateFile(fileName);
+				FileUtils.write(fileName, result);
 
 			}
 		} catch (Exception ex) {

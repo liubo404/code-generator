@@ -7,7 +7,7 @@ public class Table {
 	private String modelName;
 	private String tableName;
 	private String packageName;
-	public static String domain = "yunlu";
+	public static String domain = "effine";
 	private List<Column> propertyList;
 
 	public String getModelName() {

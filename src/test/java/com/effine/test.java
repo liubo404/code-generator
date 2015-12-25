@@ -5,6 +5,10 @@ import cn.effine.generate.Generater;
 public class test {
 	
 	public static void main(String[] args) {
-		Generater.generateAll("shopping", "C:\\test");
+		Generater.generateAll("shopping", "/source/test");
+		
 	}
+	
+	
+	
 }
