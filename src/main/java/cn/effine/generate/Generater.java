@@ -81,15 +81,15 @@ public class Generater {
 
 		// 1.读取模板信息，以及创建文件夹
 		try {
-			String dirName = filepath + "//" + defaultDomainsuffix + "//" + Table.domain + "//";
+			String dirName = filepath + File.separator + defaultDomainsuffix + File.separator + Table.domain + File.separator;
 			FileUtils.createDir(dirName);
 			Map<Integer, String> map = FileUtils.readfile(templatepath, null);
 			for (int i = 0; i < map.size(); i++) {
 				String template = map.get(i);
-				String name = template.substring(map.get(i).lastIndexOf("\\") + 1);
+				String name = template.substring(template.lastIndexOf("\\") + 1);
 				String templateName = name.substring(0, name.indexOf("."));
+				
 				// 创建文件夹
-
 				for (Table tb : list) {
 					String this_folder = dirName;
 					// if(StringUtils.isNotEmpty(tb.getPackageName())){//在defaultDomainsuffix//defaultPackage//下面添加数据库提取的一层_..
