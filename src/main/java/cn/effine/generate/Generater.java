@@ -188,15 +188,8 @@ public class Generater {
 					this_folder = this_folder + "/" + templateName;
 				}
 				if (templateName.equals("model")) {
-					fileName = this_folder + "/" + table.getModelName()
-							+ ".java";
-				}
-				// else if(templateName.equals("queryImpl")){
-				// System.out.println("this......................"+this_folder);
-				// fileName = this_folder +"/"+ table.getModelName() + ".java";
-				// }
-
-				else {
+					fileName = this_folder + "/" + table.getModelName() + ".java";
+				}else {
 					String uptemplateName = MStringUtil.upperCase(templateName, 0);
 					fileName = this_folder + "/" + table.getModelName() + uptemplateName + ".java";
 				}
