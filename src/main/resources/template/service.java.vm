@@ -21,9 +21,5 @@ public interface ${Bean}Manager {
 	public QueryResult<${Bean}> findByCondition(PageView<${Bean}> p,
 			String wheresql, LinkedHashMap<String, String> order);
 
-	public QueryResult<${Bean}> findByCondition(
-			String wheresql);
-	
+	public QueryResult<${Bean}> findByCondition(String wheresql);
 }
-
-
