@@ -1,4 +1,4 @@
-package com.effine;
+package cn.effine;
 
 import cn.effine.generate.Generater;
 
