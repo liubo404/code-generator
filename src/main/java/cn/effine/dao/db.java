@@ -68,7 +68,7 @@ public class db {
 	 * @return 数据库表名列表
 	 */
 	public static List<String> getTable(String dataBaseName) {
-		getConnection("mysql", "192.168.199.165", 3306, "root", "aichuan");
+		getConnection("mysql", "localhost", 3306, "root", "aichuan");
 		List<String> list = new ArrayList<String>();
 		String useSQL = "use " + dataBaseName;
 		String sql = " SHOW TABLES";
@@ -122,10 +122,8 @@ public class db {
 						column_type = rs.getString("type");
 						String pk = rs.getString("key");
 						length = getLength(length, column_type);
-						column_field = new String(
-								column_field.getBytes("ISO-8859-1"), "GB2312");
-						column_type = new String(
-								column_type.getBytes("ISO-8859-1"), "GB2312");
+						column_field = new String(column_field.getBytes("ISO-8859-1"), "utf-8");
+						column_type = new String(column_type.getBytes("ISO-8859-1"), "utf-8");
 						Column p = new Column();
 						p.setType(TypeConvertUtil.getType(column_type));
 						p.setName(column_field);

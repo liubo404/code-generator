@@ -86,7 +86,7 @@ public class Generater {
 			Map<Integer, String> map = FileUtils.readfile(templatepath, null);
 			for (int i = 0; i < map.size(); i++) {
 				String template = map.get(i);
-				String name = template.substring(template.lastIndexOf("\\") + 1);
+				String name = template.substring(template.lastIndexOf(File.separator) + 1);
 				String templateName = name.substring(0, name.indexOf("."));
 				
 				// 创建文件夹
@@ -95,36 +95,28 @@ public class Generater {
 					// if(StringUtils.isNotEmpty(tb.getPackageName())){//在defaultDomainsuffix//defaultPackage//下面添加数据库提取的一层_..
 					// this_folder = this_folder +tb.getPackageName();
 					// }
-					if (StringUtils.isNotEmpty(templateName)
-							&& templateName.equalsIgnoreCase("queryImpl")) {
+					if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("queryImpl")) {
 						this_folder = this_folder + "query";
 					}
-					if (StringUtils.isNotEmpty(templateName)
-							&& templateName.equalsIgnoreCase("queryCondition")) {
+					if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("queryCondition")) {
 						this_folder = this_folder + "query";
 					}
-					if (StringUtils.isNotEmpty(templateName)
-							&& templateName.equalsIgnoreCase("managerImpl")) {
+					if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("managerImpl")) {
 						this_folder = this_folder + "manager";
 					}
 					// 加载模板
-					String result = loadTemplate(templatepath, tb, templateName
-							+ ".java.vm");
+					String result = loadTemplate(templatepath, tb, templateName + ".java.vm");
 					// 创建文件
 					String fileName = null;
 
 					this_folder = this_folder + "/" + templateName;
 					if (templateName.equals("model")) {
-						fileName = this_folder + "/" + tb.getModelName()
-								+ ".java";
+						fileName = this_folder + "/" + tb.getModelName() + ".java";
 					} else if (templateName.equals("queryImpl")) {
-						fileName = this_folder + "/" + tb.getModelName()
-								+ ".java";
+						fileName = this_folder + "/" + tb.getModelName() + ".java";
 					} else {
-						String uptemplateName = MStringUtil.upperCase(
-								templateName, 0);
-						fileName = this_folder + "/" + tb.getModelName()
-								+ uptemplateName + ".java";
+						String uptemplateName = MStringUtil.upperCase(templateName, 0);
+						fileName = this_folder + "/" + tb.getModelName() + uptemplateName + ".java";
 					}
 					FileUtils.CreateFile(fileName);
 					FileUtils.write(fileName, result);
@@ -133,7 +125,6 @@ public class Generater {
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			System.out.println("Write file error!");
 		}
 	}
 
@@ -145,8 +136,7 @@ public class Generater {
 			String dirName = filepath + "//" + defaultDomainsuffix + "//"
 					+ Table.domain + "//";
 			FileUtils.createDir(dirName);
-			Map<Integer, String> map = FileUtils.readfile(templatepath,
-					null);
+			Map<Integer, String> map = FileUtils.readfile(templatepath, null);
 			for (int i = 0; i < map.size(); i++) {
 				String template = map.get(i);
 				System.out.println(template);
