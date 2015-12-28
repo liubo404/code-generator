@@ -197,10 +197,8 @@ public class Generater {
 				// }
 
 				else {
-					String uptemplateName = MStringUtil.upperCase(templateName,
-							0);
-					fileName = this_folder + "/" + table.getModelName()
-							+ uptemplateName + ".java";
+					String uptemplateName = MStringUtil.upperCase(templateName, 0);
+					fileName = this_folder + "/" + table.getModelName() + uptemplateName + ".java";
 				}
 				FileUtils.CreateFile(fileName);
 				FileUtils.write(fileName, result);
