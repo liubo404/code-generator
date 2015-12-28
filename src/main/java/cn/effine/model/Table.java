@@ -2,10 +2,13 @@ package cn.effine.model;
 
 import java.util.List;
 
+/**
+ * 数据库表
+ */
 public class Table {
 
 	private String modelName;
-	private String tableName;
+	private String tableName;// 表名
 	private String packageName;
 	public static String domain = "effine";
 	private List<Column> propertyList;

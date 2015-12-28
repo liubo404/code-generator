@@ -1,11 +1,15 @@
 package cn.effine.model;
 
+/**
+ * 数据库表中的列
+ *
+ */
 public class Column {
 
-	private String name;
-	private String column;
-	private String type;
-	private int length;
+	private String name; // 列名
+	private String column; //
+	private String type; // 类型
+	private int length; // 长度
 
 	public String getName() {
 		return name;
