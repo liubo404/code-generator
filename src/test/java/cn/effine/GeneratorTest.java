@@ -2,9 +2,11 @@ package cn.effine;
 
 import cn.effine.generate.Generater;
 
-public class test {
+public class GeneratorTest {
 	
 	public static void main(String[] args) {
-		Generater.generateAll("shopping", "C:/test");
+		Generater.generateAll("shopping", "/study");
 	}
+	
+	
 }
