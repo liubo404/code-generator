@@ -17,7 +17,6 @@ public class db {
 	public static Connection connection = null;
 	public static Statement statement = null;
 
-
 	/**
 	 * 获取数据库连接
 	 *
