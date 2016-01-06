@@ -179,17 +179,13 @@ public class Generater {
 			String result = loadTemplate(templatepath, table, templateName + ".java.vm");
 			// 创建文件
 			String fileName = null;
-			if (StringUtils.isNotEmpty(templateName)
-					&& templateName.equalsIgnoreCase("queryImpl")) {
+			if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("queryImpl")) {
 				this_folder = this_folder + "/impl";
-			} else if (StringUtils.isNotEmpty(templateName)
-					&& templateName.equalsIgnoreCase("queryCondition")) {
+			} else if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("queryCondition")) {
 				this_folder = this_folder + "/condition";
-			} else if (StringUtils.isNotEmpty(templateName)
-					&& templateName.equalsIgnoreCase("managerImpl")) {
+			} else if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("managerImpl")) {
 				this_folder = this_folder + "/impl";
-			} else if (StringUtils.isNotEmpty(templateName)
-					&& templateName.equalsIgnoreCase("daoImpl")) {
+			} else if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("daoImpl")) {
 				this_folder = this_folder + "/impl";
 			} else {
 				this_folder = this_folder + "/" + templateName;
@@ -202,7 +198,6 @@ public class Generater {
 			}
 			FileUtils.CreateFile(fileName);
 			FileUtils.write(fileName, result);
-			
 		}
 	}
 
