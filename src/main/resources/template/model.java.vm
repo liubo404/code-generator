@@ -5,7 +5,7 @@
  * @site http://www.effine.cn
  */
  
-package com.${domain}.model;
+package cn.effine.model;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,16 +1,16 @@
 /**
  * @author effine
- * @Date 2015Äê12ÔÂ5ÈÕ  ÏÂÎç3:14:11
+ * @Date 2015å¹´12æœˆ5æ—¥  ä¸‹åˆ3:14:11
  * @email verphen#gmail.com
  * @site http://www.effine.cn
  */
  
-package com.${domain}.dao;
+package cn.effine.dao;
 
 import java.io.Serializable;
 
 
-import com.${domain}.model.${modelName};
+import cn.effine.model.${modelName};
 
 public interface ${modelName}Dao extends HibernateDao<${modelName}, Serializable> {
 	

@@ -8,7 +8,7 @@
  * @site http://www.effine.cn
  */
  
-package com.${domain}.action;
+package cn.effine.action;
 
 import java.util.List;
 import javax.annotation.Resource;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.${domain}.manager.${Bean}Manager;
-import com.${domain}.model.$Bean;
+import cn.effine.manager.${Bean}Manager;
+import cn.effine.model.$Bean;
 
 @Controller
 @RequestMapping("/${bean.toLowerCase()}Action")

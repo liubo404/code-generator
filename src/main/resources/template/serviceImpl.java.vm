@@ -3,21 +3,21 @@
 #set ($Bean = $bean.substring(0,1).toUpperCase()+$bean.substring(1,$beanlen)) 
 /**
  * @author effine
- * @Date 2015Äê12ÔÂ5ÈÕ  ÏÂÎç3:14:11
+ * @Date 2015å¹´12æœˆ5æ—¥  ä¸‹åˆ3:14:11
  * @email verphen#gmail.com
  * @site http://www.effine.cn
  */
  
-package com.${domain}.manager.impl;
+package cn.effine.manager.impl;
 
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import com.${domain}.dao.${Bean}Dao;
-import com.${domain}.model.$Bean;
-import com.${domain}.manager.${Bean}Manager;
+import cn.effine.dao.${Bean}Dao;
+import cn.effine.model.$Bean;
+import cn.effine.manager.${Bean}Manager;
 
 @Service("${bean}Manager")
 public class ${Bean}ManagerImpl implements ${Bean}Manager {

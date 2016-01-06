@@ -69,21 +69,8 @@ public class Generater {
 	 */
 	public static void generateOneModle(String tableName, String outpath){
 		URL url = Thread.currentThread().getClass().getResource("/template");
-		if (url == null) {
-			System.out.println("url is null");
-		} else {
+		if(null != url){
 			String filepath = url.getPath();
-			if (filepath.startsWith("file:")) {
-				if (filepath.length() > 5) {
-					filepath = filepath.substring(5);
-				}
-				filepath = filepath.split("!")[0];
-				File file = new File(filepath);
-				filepath = file.getParent() + "\\template";
-
-			} else {
-				System.out.println("is not jar file");
-			}
 			writeOneModelFile(filepath, outpath, tableName);
 		}
 	}
@@ -96,7 +83,7 @@ public class Generater {
 	 * @param list
 	 */
 	private static void writeFile(String templatepath, String filepath, List<Table> list) {
-		String dirName = filepath + File.separator + defaultDomainsuffix + File.separator + Table.domain + File.separator;
+		String dirName = filepath + File.separator + defaultDomainsuffix + File.separator + defaultPackage + File.separator;
 		FileUtils.createDir(dirName);
 		Map<Integer, String> map = FileUtils.readfile(templatepath, null);
 		for (int i = 0; i < map.size(); i++) {
@@ -143,12 +130,15 @@ public class Generater {
 	 * 生成一个表对应的文件
 	 *
 	 * @param templatepath
-	 * @param filepath
+	 *            模板文件目录
+	 * @param outpath
+	 *            输出目录
 	 * @param tableName
+	 *            表名
 	 */
-	private static void writeOneModelFile(String templatepath, String filepath, String tableName) {
+	private static void writeOneModelFile(String templatepath, String outpath, String tableName) {
 		// 1.读取模板信息，以及创建文件夹
-		String dirName = filepath + "//" + defaultDomainsuffix + "//" + Table.domain + "//";
+		String dirName = outpath + "//" + defaultDomainsuffix + "//" + defaultPackage + "//";
 		FileUtils.createDir(dirName);
 		Map<Integer, String> map = FileUtils.readfile(templatepath, null);
 		for (int i = 0; i < map.size(); i++) {
@@ -230,12 +220,12 @@ public class Generater {
 		String packageName = table.getPackageName();
 		if (StringUtils.isNotEmpty(packageName)) {
 			model.put("packageName", "." + packageName);
-			model.put("namespace", table.domain + "/" + packageName);
+			model.put("namespace", defaultPackage + "/" + packageName);
 		} else {
 			model.put("packageName", packageName);
-			model.put("namespace", table.domain);
+			model.put("namespace", defaultPackage);
 		}
-		model.put("domain", table.domain);
+		model.put("domain", defaultPackage);
 		return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templateName, "utf-8", model);
 	}
 }

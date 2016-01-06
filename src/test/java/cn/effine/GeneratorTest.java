@@ -8,11 +8,12 @@ public class GeneratorTest {
 		
 		System.out.println(" --- start --- ");
 		
-		// Mac
-		// Generater.generateAll("shopping", "/study");
+		 // Mac
+		 // Generater.generateAll("shopping", "/study");
+		 Generater.generateOneModle("user", "/study");
 
 		// windows
-		Generater.generateAll("shopping", "C://study");
+		// Generater.generateAll("shopping", "C://study");
 		
 		System.out.println("--- finish --- ");
 		

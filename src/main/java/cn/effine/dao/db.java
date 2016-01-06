@@ -67,7 +67,7 @@ public class db {
 	 * @return 数据库表名列表
 	 */
 	public static List<String> getTable(String dataBaseName) {
-		getConnection("mysql", "localhost", 3306, "root", "aichuan");
+		getConnection("mysql", "192.168.199.165", 3306, "root", "aichuan");
 		List<String> list = new ArrayList<String>();
 		String useSQL = "use " + dataBaseName;
 		String sql = " SHOW TABLES";
