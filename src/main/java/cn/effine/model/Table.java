@@ -28,6 +28,14 @@ public class Table {
 		this.tableName = tableName;
 	}
 
+	public String getPackageName() {
+		return packageName;
+	}
+
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
+	}
+
 	public List<Column> getPropertyList() {
 		return propertyList;
 	}
@@ -36,11 +44,4 @@ public class Table {
 		this.propertyList = propertyList;
 	}
 
-	public String getPackageName() {
-		return packageName;
-	}
-
-	public void setPackageName(String packageName) {
-		this.packageName = packageName;
-	}
 }
