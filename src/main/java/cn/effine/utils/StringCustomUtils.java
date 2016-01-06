@@ -20,5 +20,4 @@ public class StringCustomUtils {
 		String remnand = str.substring(order + 1);
 		return pre + upperCase + remnand;
 	}
-
 }
