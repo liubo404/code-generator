@@ -1,7 +1,9 @@
 package cn.effine.utils;
 
-
-public class MStringUtil {
+/**
+ * 字符串处理
+ */
+public class StringCustomUtils {
 
 	/**
 	 * 将指定位置字母转换成大写
