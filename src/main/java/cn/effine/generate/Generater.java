@@ -37,17 +37,21 @@ public class Generater {
 			System.out.println("url is null");
 		} else {
 			String filepath = url.getPath();
-//			if (filepath.startsWith("file:")) {
-//				if (filepath.length() > 5) {
-//					filepath = filepath.substring(5);
-//				}
-//				filepath = filepath.split("!")[0];
-//				File file = new File(filepath);
-//				filepath = file.getParent() + "\\template";
-//
-//			} else {
-//				System.out.println("is not jar file");
-//			}
+			
+			/*
+				if (filepath.startsWith("file:")) {
+					if (filepath.length() > 5) {
+						filepath = filepath.substring(5);
+					}
+					filepath = filepath.split("!")[0];
+					File file = new File(filepath);
+					filepath = file.getParent() + "\\template";
+	
+				} else {
+					System.out.println("is not jar file");
+				}
+			*/
+			
 			writeFile(filepath, outpath, list);
 
 		}
@@ -78,8 +82,6 @@ public class Generater {
 	}
 
 	private static void writeFile(String templatepath, String filepath, List<Table> list) {
-
-		// 1.读取模板信息，以及创建文件夹
 		try {
 			String dirName = filepath + File.separator + defaultDomainsuffix + File.separator + Table.domain + File.separator;
 			FileUtils.createDir(dirName);
@@ -203,17 +205,22 @@ public class Generater {
 		}
 	}
 
-	public static String loadTemplate(String templatePath, Table table,
-			String templateName) {
+	/**
+	 * 加载模板
+	 *
+	 * @param templatePath
+	 * @param table
+	 * @param templateName
+	 * @return
+	 */
+	public static String loadTemplate(String templatePath, Table table, String templateName) {
 		String result = "";
 		try {
-
 			String fileDir = java.net.URLDecoder.decode(templatePath, "utf-8");
-			System.out.println(fileDir);
-			VelocityEngine ve = new VelocityEngine();
+			VelocityEngine velocityEngine = new VelocityEngine();
 			Properties properties = new Properties();
-			properties.setProperty(ve.FILE_RESOURCE_LOADER_PATH, fileDir);
-			ve.init(properties); // 初始化
+			properties.setProperty(velocityEngine.FILE_RESOURCE_LOADER_PATH, fileDir);
+			velocityEngine.init(properties); // 初始化
 
 			// 3.把数据填入上下文
 			Map<String, Object> cont = new HashMap<String, Object>();
@@ -224,15 +231,13 @@ public class Generater {
 			String packageName = table.getPackageName();
 			if (StringUtils.isNotEmpty(packageName)) {
 				cont.put("packageName", "." + table.getPackageName());
-				cont.put("namespace",
-						table.domain + "/" + table.getPackageName());
+				cont.put("namespace", table.domain + "/" + table.getPackageName());
 			} else {
 				cont.put("packageName", table.getPackageName());
 				cont.put("namespace", table.domain);
 			}
 			cont.put("domain", table.domain);
-			result = VelocityEngineUtils.mergeTemplateIntoString(ve,
-					templateName, "utf-8", cont);
+			result = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templateName, "utf-8", cont);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
