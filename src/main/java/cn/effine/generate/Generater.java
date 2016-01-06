@@ -57,8 +57,15 @@ public class Generater {
 		}
 	}
 
-	public static void generateOneModle(String tableName, String outpath)
-			throws Exception {
+	/**
+	 * 生成一个数据库表对应的文件
+	 *
+	 * @param tableName
+	 *            表名
+	 * @param outpath
+	 *            输出路径
+	 */
+	public static void generateOneModle(String tableName, String outpath){
 		URL url = Thread.currentThread().getClass().getResource("/template");
 		if (url == null) {
 			System.out.println("url is null");
@@ -76,9 +83,7 @@ public class Generater {
 				System.out.println("is not jar file");
 			}
 			writeOneModelFile(filepath, outpath, tableName);
-
 		}
-
 	}
 
 	private static void writeFile(String templatepath, String filepath, List<Table> list) {
@@ -130,20 +135,23 @@ public class Generater {
 		}
 	}
 
-	private static void writeOneModelFile(String templatepath, String filepath,
-			String tableName) {
+	/**
+	 * 生成一个表对应的文件
+	 *
+	 * @param templatepath
+	 * @param filepath
+	 * @param tableName
+	 */
+	private static void writeOneModelFile(String templatepath, String filepath, String tableName) {
 
 		// 1.读取模板信息，以及创建文件夹
 		try {
-			String dirName = filepath + "//" + defaultDomainsuffix + "//"
-					+ Table.domain + "//";
+			String dirName = filepath + "//" + defaultDomainsuffix + "//" + Table.domain + "//";
 			FileUtils.createDir(dirName);
 			Map<Integer, String> map = FileUtils.readfile(templatepath, null);
 			for (int i = 0; i < map.size(); i++) {
 				String template = map.get(i);
-				System.out.println(template);
-				String name = template
-						.substring(map.get(i).lastIndexOf("\\") + 1);
+				String name = template.substring(map.get(i).lastIndexOf("\\") + 1);
 				String templateName = name.substring(0, name.indexOf("."));
 				// 创建文件夹
 
@@ -153,25 +161,20 @@ public class Generater {
 				// if(StringUtils.isNotEmpty(table.getPackageName())){
 				// this_folder = this_folder +table.getPackageName();
 				// }
-				if (StringUtils.isNotEmpty(templateName)
-						&& templateName.equalsIgnoreCase("queryImpl")) {
+				if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("queryImpl")) {
 					this_folder = this_folder + "query";
 				}
-				if (StringUtils.isNotEmpty(templateName)
-						&& templateName.equalsIgnoreCase("queryCondition")) {
+				if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("queryCondition")) {
 					this_folder = this_folder + "query";
 				}
-				if (StringUtils.isNotEmpty(templateName)
-						&& templateName.equalsIgnoreCase("managerImpl")) {
+				if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("managerImpl")) {
 					this_folder = this_folder + "manager";
 				}
-				if (StringUtils.isNotEmpty(templateName)
-						&& templateName.equalsIgnoreCase("daoImpl")) {
+				if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("daoImpl")) {
 					this_folder = this_folder + "dao";
 				}
 				// 加载模板
-				String result = loadTemplate(templatepath, table, templateName
-						+ ".java.vm");
+				String result = loadTemplate(templatepath, table, templateName + ".java.vm");
 				// 创建文件
 				String fileName = null;
 				if (StringUtils.isNotEmpty(templateName)
