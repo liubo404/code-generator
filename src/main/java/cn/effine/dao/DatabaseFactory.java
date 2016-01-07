@@ -12,7 +12,10 @@ import cn.effine.model.Column;
 import cn.effine.model.Table;
 import cn.effine.utils.TypeConvertUtil;
 
-public class db {
+/**
+ * 数据库操作工厂
+ */
+public class DatabaseFactory {
 
 	public static Connection connection = null;
 	public static Statement statement = null;

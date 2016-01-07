@@ -34,7 +34,7 @@ public class TemplateUtils {
 	 *            表名
 	 * @param templateName
 	 *            模板名称
-	 * @return
+	 * @return 模板渲染的字符串
 	 */
 	public static String loadTemplate(String templatePath, Table table, String templateName) {
 		String fileDir = null;

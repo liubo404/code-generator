@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import cn.effine.dao.db;
+import cn.effine.dao.DatabaseFactory;
 import cn.effine.model.Table;
 import cn.effine.utils.CommonUtils;
 import cn.effine.utils.FileUtils;
@@ -28,8 +28,8 @@ public class Generater {
 		URL url = Thread.currentThread().getClass().getResource("/template");
 		if (null != url) {
 			String filepath = url.getPath();
-			List<String> tableNameList = db.getTable(dbname);
-			List<Table> list = db.getColumn(tableNameList);
+			List<String> tableNameList = DatabaseFactory.getTable(dbname);
+			List<Table> list = DatabaseFactory.getColumn(tableNameList);
 			writeFile(filepath, outpath, list);
 		}
 	}
@@ -122,7 +122,7 @@ public class Generater {
 			String templateName = name.substring(0, name.indexOf("."));
 			// 创建文件夹
 			
-			Table table = db.getColumnByOneTable(tableName);
+			Table table = DatabaseFactory.getColumnByOneTable(tableName);
 			
 			String this_folder = dirName;
 			// if(StringUtils.isNotEmpty(table.getPackageName())){
