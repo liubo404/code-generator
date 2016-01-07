@@ -20,5 +20,6 @@ public class Constants {
 
 	static {
 		OUT_PATH = FileUtils.getOutpath();
+		TEMPLATE_PATH = null;
 	}
 }

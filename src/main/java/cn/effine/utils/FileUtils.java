@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -170,5 +171,13 @@ public class FileUtils {
 	public static String getOutpath(){
 		String os = System.getProperty("os.name").toLowerCase();
 		return os.startsWith("win") ? PropertiesUtils.getProp("outpath.win") : PropertiesUtils.getProp("outpath.linux");
+	}
+	
+	public static String getTemplatePath(){
+		URL url = Thread.currentThread().getClass().getResource("/templates");
+		if(null != url){
+			return url.getPath();
+		}
+		return null;
 	}
 }
