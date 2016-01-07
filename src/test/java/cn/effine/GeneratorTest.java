@@ -10,10 +10,10 @@ public class GeneratorTest {
 		
 		 // Mac
 		 // Generater.generateAll("shopping", "/study");
-		 Generater.generateOneModle("user", "/study");
+		 // Generater.generateOneModle("user", "/study");
 
 		// windows
-		// Generater.generateAll("shopping", "C://study");
+		 Generater.generateAll("shopping", "C://study");
 		
 		System.out.println("--- finish --- ");
 		

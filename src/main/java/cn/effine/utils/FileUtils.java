@@ -113,7 +113,7 @@ public class FileUtils {
 	 * 读取文件
 	 *
 	 * @param filepath
-	 *            带读取文件目录
+	 *            待读取文件目录
 	 * @param pathMap
 	 * @return
 	 */

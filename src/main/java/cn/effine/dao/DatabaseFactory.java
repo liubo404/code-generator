@@ -8,11 +8,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import cn.effine.model.Column;
 import cn.effine.model.Table;
 import cn.effine.utils.TypeConvertUtil;
 
-public class db {
+/**
+ * 数据库操作工厂
+ */
+public class DatabaseFactory {
 
 	public static Connection connection = null;
 	public static Statement statement = null;
@@ -62,64 +67,63 @@ public class db {
 	/**
 	 * 获取数据库所有表名列表
 	 *
-	 * @param dataBaseName
+	 * @param dbname
 	 *            数据库名
 	 * @return 数据库表名列表
 	 */
-	public static List<String> getTable(String dataBaseName) {
-		getConnection("mysql", "192.168.199.165", 3306, "root", "aichuan");
-		List<String> list = new ArrayList<String>();
-		String useSQL = "use " + dataBaseName;
-		String sql = " SHOW TABLES";
-		String name = null;
-		ResultSet rs = null;
+	public static List<String> getTableList(String dbname) {
+		getConnection("mysql", "localhost", 3306, "root", "aichuan");
+		String tableName = null;
+		ResultSet resultSet = null;
+		List<String> tableList = new ArrayList<String>();
 		try {
-			statement.executeQuery(useSQL);
-			rs = statement.executeQuery(sql);
-			while (rs.next()) {
-				name = rs.getNString(1);
-				name = new String(name.getBytes("ISO-8859-1"), "utf-8");
-				list.add(name);
+			statement.executeQuery("use " + dbname);
+			resultSet = statement.executeQuery("show tables");
+			while (resultSet.next()) {
+				// TODO 获取表的默认字符集
+				// String defaultChartset = resultSet.getNString("charsetName");
+				tableName = resultSet.getNString(1);
+				tableName = new String(tableName.getBytes("ISO-8859-1"), "utf-8");
+				tableList.add(tableName);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
-			if(null != rs){
+			if(null != resultSet){
 				try {
-					rs.close();
+					resultSet.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-		return list;
+		return tableList;
 	}
 	
 	/**
 	 * 获取数据库表的列
 	 *
-	 * @param tableNames
+	 * @param tableNameList
 	 *            数据库表名列表
 	 * @return
 	 */
-	public static List<Table> getColumn(List<String> tableNames) {
+	public static List<Table> getColumn(List<String> tableNameList) {
 		List<Table> listTb = new ArrayList<Table>();
 		try {
-			for (int i = 0; i < tableNames.size(); i++) {
-				String tableName = tableNames.get(i);
-				if (tableName != null && !tableName.equals("")) {
-					String sql = "show columns from " + tableName;
-					ResultSet rs = statement.executeQuery(sql);
+			for (int i = 0; i < tableNameList.size(); i++) {
+				String tableName = tableNameList.get(i);
+				if (StringUtils.isNotBlank(tableName)) {
+					ResultSet resultSet = statement.executeQuery("show columns from " + tableName);
 					int length = 0;
-					Table tb = getTableByTableName(tableName);
+					Table table = getTableByTableName(tableName);
 
 					List<Column> list = new ArrayList<Column>();
-					while (rs.next()) {
+					while (resultSet.next()) {
 						String column_field = null;
 						String column_type = null;
-						column_field = rs.getString("field");
-						column_type = rs.getString("type");
-						String pk = rs.getString("key");
+						column_field = resultSet.getString("field");
+						column_type = resultSet.getString("type");
+						String pk = resultSet.getString("key");
 						length = getLength(length, column_type);
 						column_field = new String(column_field.getBytes("ISO-8859-1"), "utf-8");
 						column_type = new String(column_type.getBytes("ISO-8859-1"), "utf-8");
@@ -130,8 +134,8 @@ public class db {
 						p.setLength(length);
 						list.add(p);
 					}
-					tb.setPropertyList(list);
-					listTb.add(tb);
+					table.setPropertyList(list);
+					listTb.add(table);
 					// rs.close();
 				}
 			}
