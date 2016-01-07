@@ -36,6 +36,7 @@ public class TemplateUtils {
 	 *            模板名称
 	 * @return 模板渲染的字符串
 	 */
+	@SuppressWarnings("static-access")
 	public static String loadTemplate(String templatePath, Table table, String templateName) {
 		String fileDir = null;
 		try {

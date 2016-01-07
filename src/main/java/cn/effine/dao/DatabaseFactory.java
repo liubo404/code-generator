@@ -120,7 +120,7 @@ public class DatabaseFactory {
 						String column_type = null;
 						column_field = rs.getString("field");
 						column_type = rs.getString("type");
-						String pk = rs.getString("key");
+						//String pk = rs.getString("key");
 						length = getLength(length, column_type);
 						column_field = new String(column_field.getBytes("ISO-8859-1"), "utf-8");
 						column_type = new String(column_type.getBytes("ISO-8859-1"), "utf-8");
