@@ -22,8 +22,8 @@ public class Generater {
 	 * @param dbname
 	 *            数据库名
 	 */
-	public static void generateAll(String dbname){
-		URL url = Thread.currentThread().getClass().getResource("/template");
+	public static void generateTableList(String dbname){
+		URL url = Thread.currentThread().getClass().getResource("/templates");
 		if (null != url) {
 			String filepath = url.getPath();
 			List<String> tableNameList = DatabaseFactory.getTable(dbname);
@@ -38,8 +38,8 @@ public class Generater {
 	 * @param tableName
 	 *            表名
 	 */
-	public static void generateOneModle(String tableName){
-		URL url = Thread.currentThread().getClass().getResource("/template");
+	public static void generateTable(String tableName){
+		URL url = Thread.currentThread().getClass().getResource("/templates");
 		if(null != url){
 			String filepath = url.getPath();
 			writeOneModelFile(filepath, tableName);

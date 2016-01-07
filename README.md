@@ -11,4 +11,8 @@ web项目开发步骤：
 
 # 使用说明
 
-	1. 
+	1. 打开 src/main/resources/conf.properties，配置数据库连接和文件输入路径（根据当前系统设定）
+	
+	2. 打开 src/test/java/cn/effine/GeneratorTest.java,运行main方法即可
+	
+	3. 若生成的文件模板格式不合你的心意，你可以修改文件模板(src/main/resources/templates/*)

@@ -9,7 +9,7 @@ public class GeneratorTest {
 		System.out.println(" --- start --- ");
 		
 		// Generater.generateAll("shopping");
-		Generater.generateOneModle("user");
+		Generater.generateTable("user");
 		
 		System.out.println("--- finish --- ");
 		
