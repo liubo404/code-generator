@@ -6,7 +6,7 @@ import java.util.List;
  * 数据库表
  */
 public class Table {
-
+	
 	private String modelName;
 	private String tableName;// 表名
 	private String packageName;

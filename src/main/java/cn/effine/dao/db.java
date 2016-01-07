@@ -53,7 +53,6 @@ public class db {
 			if (!connection.isClosed()){
 				statement = connection.createStatement(); 	// statement用来执行SQL语句
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -112,7 +111,6 @@ public class db {
 					ResultSet rs = statement.executeQuery(sql);
 					int length = 0;
 					Table tb = getTableByTableName(tableName);
-
 					List<Column> list = new ArrayList<Column>();
 					while (rs.next()) {
 						String column_field = null;
@@ -154,13 +152,13 @@ public class db {
 				name = new String(name.getBytes("ISO-8859-1"), "utf-8");
 				list.add(name);
 			}
-			// rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
 
+	@SuppressWarnings("unused")
 	public static Table getColumnByOneTable(String tableName) {
 		Table tb = null;
 		try {
@@ -177,11 +175,8 @@ public class db {
 				column_type = rs.getString("type");
 				String pk = rs.getString("key");
 				length = getLength(length, column_type);
-
-				column_field = new String(column_field.getBytes("ISO-8859-1"),
-						"GB2312");
-				column_type = new String(column_type.getBytes("ISO-8859-1"),
-						"GB2312");
+				column_field = new String(column_field.getBytes("ISO-8859-1"), "GB2312");
+				column_type = new String(column_type.getBytes("ISO-8859-1"), "GB2312");
 				Column p = new Column();
 				p.setType(TypeConvertUtil.getType(column_type));
 				p.setName(column_field);
@@ -190,8 +185,6 @@ public class db {
 				list.add(p);
 			}
 			tb.setPropertyList(list);
-			// rs.close();
-			// closeConn();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -200,8 +193,7 @@ public class db {
 
 	private static int getLength(int length, String column_type) {
 		if (column_type.contains("(")) {
-			length = Integer.parseInt(column_type.substring(
-					column_type.indexOf("(") + 1, column_type.indexOf(")")));
+			length = Integer.parseInt(column_type.substring(column_type.indexOf("(") + 1, column_type.indexOf(")")));
 		}
 		return length;
 	}
