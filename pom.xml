@@ -44,6 +44,11 @@
 			<artifactId>spring-boot-starter-velocity</artifactId>
 			<version>1.1.1.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
 	</dependencies>
 
 	<build>

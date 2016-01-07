@@ -13,8 +13,10 @@ public class Constants {
 	public static final String defaultPackage = "effine"; // 默认包名
 	public static final String defaultDomainsuffix = "cn"; // 默认域名后缀
 
-	/**  文件输出路径   */
+	/** 文件输出路径  */
 	public static String OUT_PATH = null;
+	/** 模板路径 */
+	public static String TEMPLATE_PATH = null;
 
 	static {
 		OUT_PATH = FileUtils.getOutpath();

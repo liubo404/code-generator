@@ -28,7 +28,7 @@ public class Generater {
 			String filepath = url.getPath();
 			List<String> tableNameList = DatabaseFactory.getTable(dbname);
 			List<Table> list = DatabaseFactory.getColumn(tableNameList);
-			writeFile(filepath, list);
+			generateTableListFile(filepath, list);
 		}
 	}
 
@@ -41,8 +41,8 @@ public class Generater {
 	public static void generateTable(String tableName){
 		URL url = Thread.currentThread().getClass().getResource("/templates");
 		if(null != url){
-			String filepath = url.getPath();
-			writeOneModelFile(filepath, tableName);
+			String templatePath = url.getPath();
+			generateTableFile(templatePath, tableName);
 		}
 	}
 
@@ -53,7 +53,7 @@ public class Generater {
 	 * @param filepath
 	 * @param tableList
 	 */
-	private static void writeFile(String templatepath, List<Table> tableList) {
+	private static void generateTableListFile(String templatepath, List<Table> tableList) {
 		String dirName = Constants.OUT_PATH + File.separator + Constants.defaultDomainsuffix + File.separator + Constants.defaultPackage + File.separator;
 		FileUtils.createDir(dirName);
 		Map<Integer, String> map = FileUtils.readfile(templatepath, null);
@@ -100,16 +100,16 @@ public class Generater {
 	/**
 	 * 生成一个表对应的文件
 	 *
-	 * @param templatepath
+	 * @param templatePath
 	 *            模板文件目录
 	 * @param tableName
 	 *            表名
 	 */
-	private static void writeOneModelFile(String templatepath, String tableName) {
+	private static void generateTableFile(String templatePath, String tableName) {
 		// 1.读取模板信息，以及创建文件夹
 		String dirName = Constants.OUT_PATH + "//" + Constants.defaultDomainsuffix + "//" + Constants.defaultPackage + "//";
 		FileUtils.createDir(dirName);
-		Map<Integer, String> map = FileUtils.readfile(templatepath, null);
+		Map<Integer, String> map = FileUtils.readfile(templatePath, null);
 		for (int i = 0; i < map.size(); i++) {
 			String template = map.get(i);
 			String name = template.substring(map.get(i).lastIndexOf("\\") + 1);
@@ -135,7 +135,7 @@ public class Generater {
 				this_folder = this_folder + "dao";
 			}
 			// 加载模板
-			String result = TemplateUtils.loadTemplate(templatepath, table, templateName + ".java.vm");
+			String result = TemplateUtils.loadTemplate(templatePath, table, templateName + ".java.vm");
 			// 创建文件
 			String fileName = null;
 			if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("queryImpl")) {
