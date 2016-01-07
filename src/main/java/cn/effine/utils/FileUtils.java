@@ -1,10 +1,8 @@
 package cn.effine.utils;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -140,26 +138,6 @@ public class FileUtils {
 			pathMap.put(pathMap.size(), file.getPath());
 		}
 		return pathMap;
-	}
-
-	static String readtxt(String file) throws IOException {
-
-		BufferedReader br = new BufferedReader(new FileReader(file));
-
-		String str = "";
-
-		String r = br.readLine();
-
-		while (r != null) {
-
-			str += r;
-
-			r = br.readLine();
-
-		}
-
-		return str;
-
 	}
 
 	public static void write(String file, String context) {
