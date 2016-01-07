@@ -7,11 +7,16 @@
 
 package cn.effine.utils;
 
-/**
- * 常量工具类
- */
-public class CommonUtils {
+/** 常量 */
+public class Constants {
 
 	public static final String defaultPackage = "effine"; // 默认包名
 	public static final String defaultDomainsuffix = "cn"; // 默认域名后缀
+
+	/**  文件输出路径   */
+	public static String OUT_PATH = null;
+
+	static {
+		OUT_PATH = FileUtils.getOutpath();
+	}
 }

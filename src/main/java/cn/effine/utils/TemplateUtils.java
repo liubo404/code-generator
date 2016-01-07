@@ -57,12 +57,12 @@ public class TemplateUtils {
 		String packageName = table.getPackageName();
 		if (StringUtils.isNotEmpty(packageName)) {
 			model.put("packageName", "." + packageName);
-			model.put("namespace", CommonUtils.defaultPackage + "/" + packageName);
+			model.put("namespace", Constants.defaultPackage + "/" + packageName);
 		} else {
 			model.put("packageName", packageName);
-			model.put("namespace", CommonUtils.defaultPackage);
+			model.put("namespace", Constants.defaultPackage);
 		}
-		model.put("domain", CommonUtils.defaultPackage);
+		model.put("domain", Constants.defaultPackage);
 		return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templateName, "utf-8", model);
 	}
 }

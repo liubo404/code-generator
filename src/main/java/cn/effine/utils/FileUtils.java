@@ -164,7 +164,6 @@ public class FileUtils {
 
 	public static void write(String file, String context) {
 		try {
-
 			BufferedWriter output = new BufferedWriter(new FileWriter(file));
 			output.write(context);
 			output.close();
@@ -183,5 +182,15 @@ public class FileUtils {
 			}
 		}
 		f.delete();
+	}
+	
+	/**
+	 * 根据当前操作系统获取配置的输出路径
+	 * 
+	 * @return 输出路径
+	 */
+	public static String getOutpath(){
+		String os = System.getProperty("os.name").toLowerCase();
+		return os.startsWith("win") ? PropertiesUtils.getProp("outpath.win") : PropertiesUtils.getProp("outpath.linux");
 	}
 }

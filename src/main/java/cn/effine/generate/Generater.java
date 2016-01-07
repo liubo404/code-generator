@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import cn.effine.dao.DatabaseFactory;
 import cn.effine.model.Table;
-import cn.effine.utils.CommonUtils;
+import cn.effine.utils.Constants;
 import cn.effine.utils.FileUtils;
 import cn.effine.utils.StringCustomUtils;
 import cn.effine.utils.TemplateUtils;
@@ -21,16 +21,14 @@ public class Generater {
 	 *
 	 * @param dbname
 	 *            数据库名
-	 * @param outpath
-	 *            输出路径
 	 */
-	public static void generateAll(String dbname, String outpath){
+	public static void generateAll(String dbname){
 		URL url = Thread.currentThread().getClass().getResource("/template");
 		if (null != url) {
 			String filepath = url.getPath();
 			List<String> tableNameList = DatabaseFactory.getTable(dbname);
 			List<Table> list = DatabaseFactory.getColumn(tableNameList);
-			writeFile(filepath, outpath, list);
+			writeFile(filepath, list);
 		}
 	}
 
@@ -39,14 +37,12 @@ public class Generater {
 	 *
 	 * @param tableName
 	 *            表名
-	 * @param outpath
-	 *            输出路径
 	 */
-	public static void generateOneModle(String tableName, String outpath){
+	public static void generateOneModle(String tableName){
 		URL url = Thread.currentThread().getClass().getResource("/template");
 		if(null != url){
 			String filepath = url.getPath();
-			writeOneModelFile(filepath, outpath, tableName);
+			writeOneModelFile(filepath, tableName);
 		}
 	}
 
@@ -57,8 +53,8 @@ public class Generater {
 	 * @param filepath
 	 * @param tableList
 	 */
-	private static void writeFile(String templatepath, String filepath, List<Table> tableList) {
-		String dirName = filepath + File.separator + CommonUtils.defaultDomainsuffix + File.separator + CommonUtils.defaultPackage + File.separator;
+	private static void writeFile(String templatepath, List<Table> tableList) {
+		String dirName = Constants.OUT_PATH + File.separator + Constants.defaultDomainsuffix + File.separator + Constants.defaultPackage + File.separator;
 		FileUtils.createDir(dirName);
 		Map<Integer, String> map = FileUtils.readfile(templatepath, null);
 		for (int i = 0; i < map.size(); i++) {
@@ -106,14 +102,12 @@ public class Generater {
 	 *
 	 * @param templatepath
 	 *            模板文件目录
-	 * @param outpath
-	 *            输出目录
 	 * @param tableName
 	 *            表名
 	 */
-	private static void writeOneModelFile(String templatepath, String outpath, String tableName) {
+	private static void writeOneModelFile(String templatepath, String tableName) {
 		// 1.读取模板信息，以及创建文件夹
-		String dirName = outpath + "//" + CommonUtils.defaultDomainsuffix + "//" + CommonUtils.defaultPackage + "//";
+		String dirName = Constants.OUT_PATH + "//" + Constants.defaultDomainsuffix + "//" + Constants.defaultPackage + "//";
 		FileUtils.createDir(dirName);
 		Map<Integer, String> map = FileUtils.readfile(templatepath, null);
 		for (int i = 0; i < map.size(); i++) {

@@ -163,12 +163,12 @@ public class DatabaseFactory {
 
 	@SuppressWarnings("unused")
 	public static Table getColumnByOneTable(String tableName) {
-		Table tb = null;
+		Table table = null;
 		try {
 			String sql = "show columns from " + tableName;
 			ResultSet rs = statement.executeQuery(sql);
 			int length = 0;
-			tb = getTableByTableName(tableName);
+			table = getTableByTableName(tableName);
 
 			List<Column> list = new ArrayList<Column>();
 			while (rs.next()) {
@@ -187,11 +187,11 @@ public class DatabaseFactory {
 				p.setLength(length);
 				list.add(p);
 			}
-			tb.setPropertyList(list);
+			table.setPropertyList(list);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return tb;
+		return table;
 	}
 
 	private static int getLength(int length, String column_type) {
