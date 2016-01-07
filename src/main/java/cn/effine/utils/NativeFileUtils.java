@@ -1,16 +1,19 @@
 package cn.effine.utils;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileUtils {
-
+/**
+ * 本地文件操作类
+ */
+public class NativeFileUtils {
 	public static boolean CreateFile(String destFileName) {
 		File file = new File(destFileName);
 		if (file.exists()) {
@@ -38,20 +41,6 @@ public class FileUtils {
 		}
 	}
 
-	/**
-	 * 创建目录
-	 *
-	 * @param srcDir
-	 *            待创建目录
-	 * @return Boolean
-	 */
-	public static boolean createDir(String srcDir) {
-		File file = new File(srcDir);
-		if(file.exists())
-			return true;
-		return file.mkdirs(); 
-	}
-
 	public static String createTempFile(String prefix, String suffix,
 			String dirName) {
 		File tempFile = null;
@@ -62,7 +51,7 @@ public class FileUtils {
 			} else {
 				File dir = new File(dirName);
 				if (!dir.exists()) {
-					if (!FileUtils.createDir(dirName)) {
+					if (!createNativeDir(dirName)) {
 						return null;
 					}
 				}
@@ -75,53 +64,37 @@ public class FileUtils {
 		}
 	}
 
-	public static boolean deletefile(String delpath)
-			throws FileNotFoundException, IOException {
+	public static boolean deletefile(String delpath) throws FileNotFoundException, IOException {
 		try {
-
 			File file = new File(delpath);
 			if (!file.isDirectory()) {
-				System.out.println("1");
 				file.delete();
 			} else if (file.isDirectory()) {
-				System.out.println("2");
 				String[] filelist = file.list();
 				for (int i = 0; i < filelist.length; i++) {
 					File delfile = new File(delpath + "/" + filelist[i]);
 					if (!delfile.isDirectory()) {
-						System.out.println("path=" + delfile.getPath());
-						System.out.println("absolutepath="
-								+ delfile.getAbsolutePath());
-						System.out.println("name=" + delfile.getName());
 						delfile.delete();
 					} else if (delfile.isDirectory()) {
 						deletefile(delpath + "" + filelist[i]);
 					}
 				}
 				file.delete();
-
 			}
-
 		} catch (FileNotFoundException e) {
-			System.out.println("deletefile() Exception:" + e.getMessage());
+			e.printStackTrace();
 		}
 		return true;
 	}
 
-	/**
-	 * 读取文件
-	 *
-	 * @param filepath
-	 *            待读取文件目录
-	 * @param pathMap
-	 * @return
-	 */
-	public static Map<Integer, String> readfile(String filepath, Map<Integer, String> pathMap){
+	public static Map<Integer, String> readfile(String filepath, Map<Integer, String> pathMap) throws Exception {
 		if (pathMap == null) {
 			pathMap = new HashMap<Integer, String>();
 		}
 		File file = new File(filepath);
-		if (file.isDirectory()) {
+		if (!file.isDirectory()) {
+			pathMap.put(pathMap.size(), file.getPath());
+		} else if (file.isDirectory()) {
 			String[] filelist = file.list();
 			for (int i = 0; i < filelist.length; i++) {
 				if (!filelist[i].endsWith(".java.vm")) {
@@ -130,15 +103,24 @@ public class FileUtils {
 				File readfile = new File(filepath + "/" + filelist[i]);
 				if (!readfile.isDirectory()) {
 					pathMap.put(pathMap.size(), readfile.getPath());
-
 				} else if (readfile.isDirectory()) {
 					readfile(filepath + "/" + filelist[i], pathMap);
 				}
 			}
-		}else{
-			pathMap.put(pathMap.size(), file.getPath());
 		}
 		return pathMap;
+	}
+
+	static String readtxt(String file) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String str = "";
+		String r = br.readLine();
+		while (r != null) {
+			str += r;
+			r = br.readLine();
+		}
+		br.close();
+		return str;
 	}
 
 	public static void write(String file, String context) {
@@ -162,22 +144,22 @@ public class FileUtils {
 		}
 		f.delete();
 	}
-	
+
 	/**
-	 * 根据当前操作系统获取配置的输出路径
-	 * 
-	 * @return 输出路径
+	 * 创建本地目录
+	 *
+	 * @param pathname
+	 *            待创建的目标目录路径
+	 * @return Boolean
 	 */
-	public static String getOutpath(){
-		String os = System.getProperty("os.name").toLowerCase();
-		return os.startsWith("win") ? PropertiesUtils.getProp("outpath.win") : PropertiesUtils.getProp("outpath.linux");
-	}
-	
-	public static String getTemplatePath(){
-		URL url = Thread.currentThread().getClass().getResource("/templates");
-		if(null != url){
-			return url.getPath();
+	public static boolean createNativeDir(String pathname) {
+		File dir = new File(pathname);
+		if (!dir.exists()) {
+			// File.separator在不同的操作系统的表现：windows("\")、linux("/")
+			if (!pathname.endsWith(File.separator))
+				pathname = pathname + File.separator;
+			return dir.mkdirs();
 		}
-		return null;
+		return true;
 	}
 }

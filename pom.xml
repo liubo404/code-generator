@@ -2,13 +2,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.effine</groupId>
-	<artifactId>code-gnerater</artifactId>
-	<version>0.1</version>
+	<groupId>cn.effine</groupId>
+	<artifactId>code-generator</artifactId>
+	<version>1.0</version>
 	<packaging>war</packaging>
 
-	<name>code-gnerater</name>
-	<url>https://github.com/effine/code-generater</url>
+	<name>code-generator</name>
+	<url>https://github.com/effine/code-generator</url>
+
+	<properties>
+		<!-- 文件拷贝时的编码 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- 编译时的编码 -->
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -16,7 +24,6 @@
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 		</dependency>
-
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -37,9 +44,15 @@
 			<artifactId>spring-boot-starter-velocity</artifactId>
 			<version>1.1.1.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
 	</dependencies>
-	
+
 	<build>
+		<finalName>code-generator</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -61,6 +74,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>code-generator</finalName>
 	</build>
 </project>

@@ -2,7 +2,6 @@ package cn.effine.model;
 
 /**
  * 数据库表中的列
- *
  */
 public class Column {
 

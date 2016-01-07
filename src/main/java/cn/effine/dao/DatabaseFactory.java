@@ -58,7 +58,6 @@ public class DatabaseFactory {
 			if (!connection.isClosed()){
 				statement = connection.createStatement(); 	// statement用来执行SQL语句
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,15 +114,14 @@ public class DatabaseFactory {
 				if (StringUtils.isNotBlank(tableName)) {
 					ResultSet resultSet = statement.executeQuery("show columns from " + tableName);
 					int length = 0;
-					Table table = getTableByTableName(tableName);
-
+					Table tb = getTableByTableName(tableName);
 					List<Column> list = new ArrayList<Column>();
 					while (resultSet.next()) {
 						String column_field = null;
 						String column_type = null;
 						column_field = resultSet.getString("field");
 						column_type = resultSet.getString("type");
-						String pk = resultSet.getString("key");
+						//String pk = rs.getString("key");
 						length = getLength(length, column_type);
 						column_field = new String(column_field.getBytes("ISO-8859-1"), "utf-8");
 						column_type = new String(column_type.getBytes("ISO-8859-1"), "utf-8");
@@ -134,8 +132,8 @@ public class DatabaseFactory {
 						p.setLength(length);
 						list.add(p);
 					}
-					table.setPropertyList(list);
-					listTb.add(table);
+					tb.setPropertyList(list);
+					listTb.add(tb);
 					// rs.close();
 				}
 			}
@@ -158,20 +156,20 @@ public class DatabaseFactory {
 				name = new String(name.getBytes("ISO-8859-1"), "utf-8");
 				list.add(name);
 			}
-			// rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
 
+	@SuppressWarnings("unused")
 	public static Table getColumnByOneTable(String tableName) {
-		Table tb = null;
+		Table table = null;
 		try {
 			String sql = "show columns from " + tableName;
 			ResultSet rs = statement.executeQuery(sql);
 			int length = 0;
-			tb = getTableByTableName(tableName);
+			table = getTableByTableName(tableName);
 
 			List<Column> list = new ArrayList<Column>();
 			while (rs.next()) {
@@ -181,11 +179,8 @@ public class DatabaseFactory {
 				column_type = rs.getString("type");
 				String pk = rs.getString("key");
 				length = getLength(length, column_type);
-
-				column_field = new String(column_field.getBytes("ISO-8859-1"),
-						"GB2312");
-				column_type = new String(column_type.getBytes("ISO-8859-1"),
-						"GB2312");
+				column_field = new String(column_field.getBytes("ISO-8859-1"), "GB2312");
+				column_type = new String(column_type.getBytes("ISO-8859-1"), "GB2312");
 				Column p = new Column();
 				p.setType(TypeConvertUtil.getType(column_type));
 				p.setName(column_field);
@@ -193,19 +188,16 @@ public class DatabaseFactory {
 				p.setLength(length);
 				list.add(p);
 			}
-			tb.setPropertyList(list);
-			// rs.close();
-			// closeConn();
+			table.setPropertyList(list);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return tb;
+		return table;
 	}
 
 	private static int getLength(int length, String column_type) {
 		if (column_type.contains("(")) {
-			length = Integer.parseInt(column_type.substring(
-					column_type.indexOf("(") + 1, column_type.indexOf(")")));
+			length = Integer.parseInt(column_type.substring(column_type.indexOf("(") + 1, column_type.indexOf(")")));
 		}
 		return length;
 	}
