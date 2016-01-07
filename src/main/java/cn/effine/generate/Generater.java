@@ -1,27 +1,20 @@
 package cn.effine.generate;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.velocity.app.VelocityEngine;
-import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import cn.effine.dao.db;
 import cn.effine.model.Table;
+import cn.effine.utils.CommonUtils;
 import cn.effine.utils.FileUtils;
 import cn.effine.utils.StringCustomUtils;
+import cn.effine.utils.TemplateUtils;
 
 public class Generater {
-
-	public static final String defaultPackage = "effine";
-	public static final String defaultDomainsuffix = "cn";
 
 	/**
 	 * 生成所有数据库表对应的MVC文件
@@ -62,10 +55,10 @@ public class Generater {
 	 *
 	 * @param templatepath
 	 * @param filepath
-	 * @param list
+	 * @param tableList
 	 */
-	private static void writeFile(String templatepath, String filepath, List<Table> list) {
-		String dirName = filepath + File.separator + defaultDomainsuffix + File.separator + defaultPackage + File.separator;
+	private static void writeFile(String templatepath, String filepath, List<Table> tableList) {
+		String dirName = filepath + File.separator + CommonUtils.defaultDomainsuffix + File.separator + CommonUtils.defaultPackage + File.separator;
 		FileUtils.createDir(dirName);
 		Map<Integer, String> map = FileUtils.readfile(templatepath, null);
 		for (int i = 0; i < map.size(); i++) {
@@ -74,7 +67,7 @@ public class Generater {
 			String templateName = name.substring(0, name.indexOf("."));
 			
 			// 创建文件夹
-			for (Table tb : list) {
+			for (Table table : tableList) {
 				String this_folder = dirName;
 				// if(StringUtils.isNotEmpty(tb.getPackageName())){//在defaultDomainsuffix//defaultPackage//下面添加数据库提取的一层_..
 				// this_folder = this_folder +tb.getPackageName();
@@ -89,18 +82,18 @@ public class Generater {
 					this_folder = this_folder + "manager";
 				}
 				// 加载模板
-				String result = loadTemplate(templatepath, tb, templateName + ".java.vm");
+				String result = TemplateUtils.loadTemplate(templatepath, table, templateName + ".java.vm");
 				// 创建文件
 				String fileName = null;
 				
 				this_folder = this_folder + "/" + templateName;
 				if (templateName.equals("model")) {
-					fileName = this_folder + "/" + tb.getModelName() + ".java";
+					fileName = this_folder + "/" + table.getModelName() + ".java";
 				} else if (templateName.equals("queryImpl")) {
-					fileName = this_folder + "/" + tb.getModelName() + ".java";
+					fileName = this_folder + "/" + table.getModelName() + ".java";
 				} else {
 					String uptemplateName = StringCustomUtils.upperCase(templateName, 0);
-					fileName = this_folder + "/" + tb.getModelName() + uptemplateName + ".java";
+					fileName = this_folder + "/" + table.getModelName() + uptemplateName + ".java";
 				}
 				FileUtils.CreateFile(fileName);
 				FileUtils.write(fileName, result);
@@ -120,7 +113,7 @@ public class Generater {
 	 */
 	private static void writeOneModelFile(String templatepath, String outpath, String tableName) {
 		// 1.读取模板信息，以及创建文件夹
-		String dirName = outpath + "//" + defaultDomainsuffix + "//" + defaultPackage + "//";
+		String dirName = outpath + "//" + CommonUtils.defaultDomainsuffix + "//" + CommonUtils.defaultPackage + "//";
 		FileUtils.createDir(dirName);
 		Map<Integer, String> map = FileUtils.readfile(templatepath, null);
 		for (int i = 0; i < map.size(); i++) {
@@ -148,7 +141,7 @@ public class Generater {
 				this_folder = this_folder + "dao";
 			}
 			// 加载模板
-			String result = loadTemplate(templatepath, table, templateName + ".java.vm");
+			String result = TemplateUtils.loadTemplate(templatepath, table, templateName + ".java.vm");
 			// 创建文件
 			String fileName = null;
 			if (StringUtils.isNotEmpty(templateName) && templateName.equalsIgnoreCase("queryImpl")) {
@@ -173,41 +166,5 @@ public class Generater {
 		}
 	}
 
-	/**
-	 * 加载模板
-	 *
-	 * @param templatePath
-	 * @param table
-	 * @param templateName
-	 * @return
-	 */
-	public static String loadTemplate(String templatePath, Table table, String templateName) {
-		String fileDir = null;
-		try {
-			fileDir = URLDecoder.decode(templatePath, "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		VelocityEngine velocityEngine = new VelocityEngine();
-		Properties properties = new Properties();
-		properties.setProperty(velocityEngine.FILE_RESOURCE_LOADER_PATH, fileDir);
-		velocityEngine.init(properties); // 初始化
-		
-		// 3.把数据填入上下文
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("modelName", table.getModelName());
-		model.put("tableName", table.getTableName());
-		model.put("PropertyList", table.getPropertyList());
-		model.put("model", table.getModelName().toLowerCase());
-		String packageName = table.getPackageName();
-		if (StringUtils.isNotEmpty(packageName)) {
-			model.put("packageName", "." + packageName);
-			model.put("namespace", defaultPackage + "/" + packageName);
-		} else {
-			model.put("packageName", packageName);
-			model.put("namespace", defaultPackage);
-		}
-		model.put("domain", defaultPackage);
-		return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templateName, "utf-8", model);
-	}
+	
 }
