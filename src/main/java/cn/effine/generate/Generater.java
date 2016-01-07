@@ -26,36 +26,18 @@ public class Generater {
 	/**
 	 * 生成所有数据库表对应的MVC文件
 	 *
-	 * @param DBName
+	 * @param dbname
 	 *            数据库名
 	 * @param outpath
 	 *            输出路径
 	 */
-	public static void generateAll(String DBName, String outpath){
-		List<String> tableNameList = db.getTable(DBName);
-		List<Table> list = db.getColumn(tableNameList);
+	public static void generateAll(String dbname, String outpath){
 		URL url = Thread.currentThread().getClass().getResource("/template");
-		if (url == null) {
-			System.out.println("url is null");
-		} else {
+		if (null != url) {
 			String filepath = url.getPath();
-			
-			/*
-				if (filepath.startsWith("file:")) {
-					if (filepath.length() > 5) {
-						filepath = filepath.substring(5);
-					}
-					filepath = filepath.split("!")[0];
-					File file = new File(filepath);
-					filepath = file.getParent() + "\\template";
-	
-				} else {
-					System.out.println("is not jar file");
-				}
-			*/
-			
+			List<String> tableNameList = db.getTable(dbname);
+			List<Table> list = db.getColumn(tableNameList);
 			writeFile(filepath, outpath, list);
-
 		}
 	}
 
