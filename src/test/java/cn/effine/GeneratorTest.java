@@ -8,7 +8,7 @@ public class GeneratorTest {
 		
 		System.out.println(" --- start --- ");
 		
-		// Generater.generateAll("shopping");
+		Generater.generateTableList("shopping");
 		Generater.generateTable("user");
 		
 		System.out.println("--- finish --- ");
