@@ -8,8 +8,8 @@ public class GeneratorTest {
 		
 		System.out.println(" --- start --- ");
 		
-		Generater.generateTableListFile("shopping", null);
-//		Generater.generateTable("user");
+		Generater.generateTableList("shopping");
+		Generater.generateTable("user");
 		
 		System.out.println("--- finish --- ");
 		
