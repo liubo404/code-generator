@@ -1,12 +1,14 @@
-# ===== Eclipse ====== #
-*.classpath
-*.project
-/.settings
+.settings/
+bin/
+target/
+src/main/webapp/WEB-INF/classes/
+build/
+.gradle/
+gradle/
 
-
-# ===== project ===== #
+.classpath
+.project
 *.class
 *.jar
 *.war
 *.ear
-/target

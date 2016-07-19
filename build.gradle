@@ -1,0 +1,27 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'cn.effine'
+version = '1.0'
+
+description = "code-generator"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+
+
+repositories {
+        
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile (
+	    'javax.servlet:servlet-api:2.5',
+	    'mysql:mysql-connector-java:5.1.13',
+	    'org.apache.commons:commons-lang3:3.3.2',
+	    'org.apache.velocity:velocity:1.7-beta1',
+	    'org.springframework.boot:spring-boot-starter-velocity:1.1.1.RELEASE',
+	    'junit:junit:4.11'
+    )
+}
